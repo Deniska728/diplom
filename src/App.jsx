@@ -1,8 +1,12 @@
 import React from 'react';
-import './App.css';
+import { ApolloProvider } from '@apollo/react-hooks';
 
-function App() {
-  return (
+import client from 'startup/apollo';
+
+import 'styles/index.scss';
+
+const App = () => (
+  <ApolloProvider client={client}>
     <div className="App">
       <header className="App-header">
         <p>
@@ -18,7 +22,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
-}
+  </ApolloProvider>
+);
 
 export default App;
