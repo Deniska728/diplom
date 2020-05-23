@@ -1,27 +1,16 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { BrowserRouter } from 'react-router-dom';
+
+import Routes from './Routes';
 
 import client from 'startup/apollo';
 
-import 'styles/index.scss';
-
 const App = () => (
   <ApolloProvider client={client}>
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   </ApolloProvider>
 );
 
