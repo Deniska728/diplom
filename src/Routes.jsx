@@ -1,18 +1,22 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
+
+import Home from 'components/home/Home';
+
+import ME from 'graphql/queries/user/me';
 
 const Routes = () => {
-  const user = true;
+  const { data, loading } = useQuery(ME);
+  const user = data && data.me && data.me.id;
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <Link to="/test">test</Link>
-      <Switch>
-        <Route exact path="/" render={() => <div>Home page</div>} />
-        {user && <Route path="/test" component={() => <div>Test page</div>} />}
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path="/" render={() => <Home user={user} />} />
+      {user && <Route path="/test" component={() => <div>Test page</div>} />}
+    </Switch>
   );
 };
 
