@@ -3,10 +3,12 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { Container, Row, Col, Button } from 'reactstrap';
 
+import SchemasSelector from 'components/home/SchemasSelector';
+
 import SCHEMAS from 'graphql/queries/schemas/schemas';
 
 const Home = ({ user }) => {
-  const { data } = useQuery(SCHEMAS);
+  const { data, loading, refetch } = useQuery(SCHEMAS);
 
   return (
     <div className="home-page">
@@ -18,7 +20,35 @@ const Home = ({ user }) => {
             </Button>
           </Col>
         </Row>
-        <div className="home-content"></div>
+        <div className="home-content">
+          <Row>
+            <Col md={7} className="hidden-md">
+              <div className="logo-container">
+                <div className="logo-heading">
+                  <h1 className="logo">
+                    Graph<span className="logo-letter">Q</span>q
+                  </h1>
+                  <h5 className="subheading">GraphQL Schema collaboration tool</h5>
+                </div>
+              </div>
+            </Col>
+            <Col md={5}>
+              <div className="schemas-container">
+                <SchemasSelector schemas={data} loading={loading} />
+              </div>
+            </Col>
+            <Col md={7} className="hidden-sm">
+              <div className="logo-container">
+                <div className="logo-heading">
+                  <h1 className="logo">
+                    Graph<span className="logo-letter">Q</span>q
+                  </h1>
+                  <h5 className="subheading">GraphQL Schema collaboration tool</h5>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
       </Container>
     </div>
   );

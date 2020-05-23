@@ -1,4 +1,7 @@
 @import "plugins/bootstrap/bootstrap.scss";
 
+@import "variables";
+@import "common";
 @import "app";
-@import "home"
+@import "home";
+@import "schemas";

@@ -1,0 +1,81 @@
+.home-page {
+	background-color: $white;
+	height: 100vh;
+
+	.login-row {
+		padding-top: 30px;
+
+		.login-link {
+			float: right;
+			letter-spacing: .5px;
+			color: $main;
+		}
+	}
+
+	.home-content {
+		padding-top: 20px;
+		padding-bottom: 40px;
+
+		.logo-container {
+			height: 60vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+
+			background-image: url('/images/cube.svg');
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+
+			@include media-breakpoint-down(lg) {
+				height: 45vh;
+			}
+
+			.logo-heading {
+				.logo {
+					font-weight: bold;
+					font-size: 8rem;
+					letter-spacing: 2px;
+
+					@include media-breakpoint-down(lg) {
+						font-size: 6rem;
+					}
+
+					@include media-breakpoint-down(md) {
+						font-size: 5rem;
+					}
+
+					.logo-letter {
+						color: $main;
+					}
+				}
+
+				.subheading {
+					font-weight: 300;
+					letter-spacing: 1px;
+					text-transform: uppercase;
+					padding-left: 5px;
+					margin-top: 20px;
+					color: #666;
+
+					@include media-breakpoint-down(md) {
+						font-size: 1rem;
+					}
+				}
+			}
+		}
+	}
+
+	.hidden-md {
+		@include media-breakpoint-up(md) {
+			display: none;
+		}
+	}
+
+	.hidden-sm {
+		@include media-breakpoint-down(sm) {
+			display: none;
+		}
+	}
+}
