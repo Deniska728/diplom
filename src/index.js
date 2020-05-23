@@ -4,6 +4,11 @@ import App from './App';
 
 import 'styles/index.scss';
 
+window.logout = () => {
+  localStorage.removeItem('access_token');
+  window.location.reload();
+};
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

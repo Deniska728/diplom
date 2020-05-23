@@ -4,18 +4,30 @@ import { useQuery } from '@apollo/react-hooks';
 import { Container, Row, Col, Button } from 'reactstrap';
 
 import SchemasSelector from 'components/home/SchemasSelector';
+import authLockRunner from 'components/auth/authLockRunner';
 
 import SCHEMAS from 'graphql/queries/schemas/schemas';
 
-const Home = ({ user }) => {
+const Home = ({ user, meRefetch }) => {
   const { data, loading, refetch } = useQuery(SCHEMAS);
+
+  const runAuthLock = () => {
+    if (user) {
+      if (window.confirm('Are you sure? Logout?')) {
+        window.logout();
+      }
+    } else {
+      const lock = authLockRunner({ meRefetch, authCallback: refetch });
+      lock.show();
+    }
+  };
 
   return (
     <div className="home-page">
       <Container>
         <Row className="login-row">
           <Col sm={12}>
-            <Button color="link" className="login-link" onClick={() => {}}>
+            <Button color="link" className="login-link" onClick={runAuthLock}>
               {user ? 'Log out' : 'Log in'}
             </Button>
           </Col>
