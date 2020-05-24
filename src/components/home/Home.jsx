@@ -46,7 +46,12 @@ const Home = ({ user, meRefetch }) => {
             </Col>
             <Col md={5}>
               <div className="schemas-container">
-                <SchemasSelector schemas={data} loading={loading} />
+                <SchemasSelector
+                  schemas={data}
+                  loading={loading}
+                  runAuthLock={runAuthLock}
+                  user={user}
+                />
               </div>
             </Col>
             <Col md={7} className="hidden-sm">

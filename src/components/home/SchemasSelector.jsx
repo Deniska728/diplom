@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useMutation, useApolloClient } from '@apollo/react-hooks';
 
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
-const SchemasSelector = ({ schemas, loading }) => {
+import CREATE_SCHEMA from 'graphql/mutations/schemas/createSchema';
+import SCHEMAS from 'graphql/queries/schemas/schemas';
+
+const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
+  const client = useApolloClient();
+  const [createSchema, { loading: schemaLoading }] = useMutation(CREATE_SCHEMA);
   const [values, setValues] = useState({
     url: '',
     apiKeyName: '',
@@ -15,6 +21,43 @@ const SchemasSelector = ({ schemas, loading }) => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { url, apiKeyName, apiKey } = values;
+
+    if (user) {
+      if (url) {
+        const variables = {
+          endpoint: url,
+        };
+
+        if (apiKeyName && apiKey) {
+          variables.apiKeyName = apiKeyName;
+          variables.apiKey = apiKey;
+        }
+
+        createSchema({ variables })
+          .then(({ data }) => {
+            const schemas = client.readQuery({ query: SCHEMAS });
+
+            client.writeQuery({
+              query: SCHEMAS,
+              data: {
+                schemas: [...schemas.schemas, data.createSchema],
+              },
+            });
+            setValues({ url: '', apiKey: '', apiKeyName: '' });
+          })
+          .catch((err) => console.error(err.message));
+      } else {
+        window.alert('Enter endpoint url');
+      }
+    } else {
+      runAuthLock();
+    }
   };
 
   const isEmptySchemas = schemas && schemas.schemas && schemas.schemas.length;
@@ -39,7 +82,7 @@ const SchemasSelector = ({ schemas, loading }) => {
           </div>
         )}
       </div>
-      <Form className={`schemas-form${isOpen ? ' form-open' : ''}`}>
+      <Form className={`schemas-form${isOpen ? ' form-open' : ''}`} onSubmit={handleSubmit}>
         <FormGroup>
           <Input
             type="url"
@@ -67,7 +110,7 @@ const SchemasSelector = ({ schemas, loading }) => {
               <Input
                 type="text"
                 id="apiKey"
-                name="apikey"
+                name="apiKey"
                 placeholder="Enter api-key"
                 bsSize="lg"
                 value={values.apiKey}
@@ -75,7 +118,7 @@ const SchemasSelector = ({ schemas, loading }) => {
               />
             </React.Fragment>
           )}
-          <Button type="submit" color="primary" size="lg" disabled={loading}>
+          <Button type="submit" color="primary" size="lg" disabled={schemaLoading}>
             Submit
           </Button>
         </FormGroup>
