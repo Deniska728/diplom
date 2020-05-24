@@ -6,11 +6,7 @@ export default gql`
       id
       name
       apiKey
-      latestVersion {
-        id
-        number
-        endpointUrl
-      }
+      endpointUrl
     }
   }
 `;
