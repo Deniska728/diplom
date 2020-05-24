@@ -5,12 +5,13 @@ import { useQuery } from '@apollo/react-hooks';
 import Home from 'components/home/Home';
 
 import ME from 'graphql/queries/user/me';
+import Loading from 'components/common/Loading';
 
 const Routes = () => {
   const { data, loading, refetch } = useQuery(ME);
   const user = data && data.me && data.me.id;
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading page />;
 
   return (
     <Switch>

@@ -5,6 +5,7 @@ import { Button, Form, FormGroup, Input } from 'reactstrap';
 
 import CREATE_SCHEMA from 'graphql/mutations/schemas/createSchema';
 import SCHEMAS from 'graphql/queries/schemas/schemas';
+import Loading from '../common/Loading';
 
 const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
   const client = useApolloClient();
@@ -66,7 +67,7 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
     <div className="schemas-selector">
       <div className="schemas-list-container">
         {loading ? (
-          <div>Loading...</div>
+          <Loading />
         ) : (
           <div className={`schemas-list ${isEmptySchemas ? '' : ' empty'}`}>
             {isEmptySchemas &&
@@ -119,7 +120,7 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
             </React.Fragment>
           )}
           <Button type="submit" color="primary" size="lg" disabled={schemaLoading}>
-            Submit
+            {schemaLoading ? <Loading invert /> : 'Submit'}
           </Button>
         </FormGroup>
       </Form>
