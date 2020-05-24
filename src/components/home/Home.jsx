@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Container, Row, Col, Button } from 'reactstrap';
 
 import SchemasSelector from 'components/home/SchemasSelector';
+import FeaturesSection from 'components/home/FeaturesSection';
 import authLockRunner from 'components/auth/authLockRunner';
 
 import SCHEMAS from 'graphql/queries/schemas/schemas';
@@ -67,6 +68,7 @@ const Home = ({ user, meRefetch }) => {
           </Row>
         </div>
       </Container>
+      <FeaturesSection />
     </div>
   );
 };

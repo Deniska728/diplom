@@ -24,6 +24,17 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
     }));
   };
 
+  const toggle = () => {
+    if (isOpen) {
+      setValues((prev) => ({
+        url: prev.url,
+        apiKeyName: '',
+        apiKey: '',
+      }));
+    }
+    setIsOpen(!isOpen);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -124,7 +135,7 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
           </Button>
         </FormGroup>
       </Form>
-      <button onClick={() => setIsOpen(!isOpen)} className="question-btn">
+      <button onClick={toggle} className="question-btn">
         Do you have an api-key?
       </button>
     </div>

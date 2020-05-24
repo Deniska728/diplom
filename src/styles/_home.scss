@@ -32,6 +32,10 @@
 				height: 45vh;
 			}
 
+			@include media-breakpoint-down(xs) {
+				height: 35vh;
+			}
+
 			.logo-heading {
 				.logo {
 					font-weight: bold;
@@ -44,6 +48,11 @@
 
 					@include media-breakpoint-down(md) {
 						font-size: 5rem;
+					}
+
+					@include media-breakpoint-down(xs) {
+						font-size: 4rem;
+						text-align: center;
 					}
 
 					.logo-letter {
