@@ -4,12 +4,14 @@ import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
 import CREATE_SCHEMA from 'graphql/mutations/schemas/createSchema';
+import DELETE_SCHEMA from 'graphql/mutations/schemas/deleteSchema';
 import SCHEMAS from 'graphql/queries/schemas/schemas';
 import Loading from '../common/Loading';
 
 const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
   const client = useApolloClient();
   const [createSchema, { loading: schemaLoading }] = useMutation(CREATE_SCHEMA);
+  const [deleteSchema, { loading: deleteSchemaLoading }] = useMutation(DELETE_SCHEMA);
   const [values, setValues] = useState({
     url: '',
     apiKeyName: '',
@@ -72,6 +74,25 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
     }
   };
 
+  const handleDeleteSchema = (e, id) => {
+    e.stopPropagation();
+
+    if (id && window.confirm('Are you sure? Delete this schema?')) {
+      deleteSchema({ variables: { id } })
+        .then(({ data }) => {
+          const schemas = client.readQuery({ query: SCHEMAS });
+
+          client.writeQuery({
+            query: SCHEMAS,
+            data: {
+              schemas: schemas.schemas.filter((schema) => schema.id !== data.deleteSchema.id),
+            },
+          });
+        })
+        .catch((err) => console.error(err.message));
+    }
+  };
+
   const isEmptySchemas = schemas && schemas.schemas && schemas.schemas.length;
 
   return (
@@ -88,7 +109,11 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
                   {schema.latestVersion && (
                     <span className="schema-url">{schema.latestVersion.endpointUrl}</span>
                   )}
-                  <Button close onClick={() => console.log(schema.id)} />
+                  <Button
+                    close
+                    onClick={(e) => handleDeleteSchema(e, schema.id)}
+                    disabled={deleteSchemaLoading}
+                  />
                 </div>
               ))}
           </div>
