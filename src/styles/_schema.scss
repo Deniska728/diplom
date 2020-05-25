@@ -9,7 +9,12 @@
 }
 
 .schema-type {
-  font-size: 18px;
+  font-size: 16px;
+
+  &.clickable {
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
 }
 
 .schema-type-name {
@@ -24,15 +29,22 @@
   color: rgb(213, 178, 89);
 }
 
+.schema-type-enum {
+  padding-left: 15px;
+  color: rgb(67, 112, 165);
+}
+
 .schema-type-link:hover {
   text-decoration-line: underline;
 }
 
-.schema-type-underlying {
+.schema-type-underlying, .schema-type-type {
   padding: 10px;
   border-radius: 5px;
 }
 
-.schema-type-underlying:hover {
-  background-color: #f4f4f4;
+.schema-type-underlying, .schema-type-type {
+  &:hover {
+    background-color: #f4f4f4;
+  }
 }

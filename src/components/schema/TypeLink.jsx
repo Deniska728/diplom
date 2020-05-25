@@ -9,7 +9,12 @@ const TypeLink = ({ fields }) => {
         {fields.map((field) => (
           <span key={field.name + field.id}>
             <span className="schema-type-name">{field.name}:</span>
-            <div className="schema-type-link">{parseKinds(field)}</div>
+            <div
+              className="schema-type-link"
+              onClick={() => document.getElementById(field.typeName).scrollIntoView()}
+            >
+              {parseKinds(field)}
+            </div>
             <br />
           </span>
         ))}

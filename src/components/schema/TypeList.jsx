@@ -12,6 +12,10 @@ const TypeList = ({ types, kind, schemaId }) => {
   const kindArgs =
     kind === 'OBJECT' || kind === 'INPUT_OBJECT' || kind === 'INTERFACE' || kind === 'ENUM';
 
+  const handleClick = (type) => {
+    document.getElementById(type.typeName).scrollIntoView();
+  };
+
   return (
     <div>
       {types &&
@@ -24,13 +28,13 @@ const TypeList = ({ types, kind, schemaId }) => {
               id={type.name}
               className={kind ? 'schema-type-type' : 'schema-type-underlying'}
             >
+              <span className="schema-type-name">{type.name}</span>
               {kind === 'SCALAR' && type.description && (
                 <div
                   className="schema-type-description"
                   style={{ paddingLeft: 15 }}
                 >{`"""${type.description}"""`}</div>
               )}
-              <span className="schema-type-name">{type.name}</span>
               {type.interfaces && type.interfaces[0] && type.interfaces[0].name ? (
                 <span>
                   {' '}
@@ -45,7 +49,9 @@ const TypeList = ({ types, kind, schemaId }) => {
               <Arguments kind={kind} type={type} schemaId={schemaId} fields={fields} />
               {fields ? (kindArgs ? '}' : !kind ? ') ' : ' ') : ''}
 
-              <div className="schema-type-link">{!kind && ': ' + (type && parseKinds(type))}</div>
+              <div className="schema-type-link" onClick={() => handleClick(type)}>
+                {!kind && ': ' + (type && parseKinds(type))}
+              </div>
             </div>
           );
         })}
