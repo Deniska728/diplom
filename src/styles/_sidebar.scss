@@ -1,0 +1,60 @@
+.sidebar {
+  background: $dark-blue;
+  position: fixed;
+  height: 100%;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+
+  .logo {
+    height: 100px;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    .logo-link {
+      display: block;
+      height: 100px;
+      font-size: 50px;
+      line-height: 100px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+      color: $white;
+    }
+  }
+
+  .schema-links {
+    position: relative;
+    height: 100%;
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+
+      .item-link {
+        font-size: 50px;
+        display: block;
+        text-align: center;
+        font-weight: bold;
+
+        &.active {
+          color: rgb(196, 36, 169);
+        }
+
+      }
+      &.user-profile {
+        position: absolute;
+        width: 100%;
+        bottom: 20px;
+        .item-link {
+          background-size: cover;
+          background-position: center;
+          border: 0px solid;
+          border-radius: 200px;
+          width: 40px;
+          height: 40px;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}

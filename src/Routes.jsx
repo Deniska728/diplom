@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 
 import Home from 'components/home/Home';
@@ -37,6 +37,7 @@ const Routes = () => {
           </Layout>
         </Route>
       )}
+      {!userId && <Route render={() => <Redirect to="/" />} />}
     </Switch>
   );
 };
