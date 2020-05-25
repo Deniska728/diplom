@@ -26,6 +26,7 @@
   .schema-links {
     position: relative;
     height: 100%;
+    
     .menu-item {
       display: flex;
       flex-direction: column;
@@ -45,6 +46,7 @@
         position: absolute;
         width: 100%;
         bottom: 20px;
+
         .item-link {
           background-size: cover;
           background-position: center;

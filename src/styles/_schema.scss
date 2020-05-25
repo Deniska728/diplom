@@ -1,0 +1,38 @@
+.schema-viewer-wrapper {
+  height: 100%;
+  overflow: scroll;
+}
+
+.schema {
+  margin-left: 10px;
+  margin-right: 25px;
+}
+
+.schema-type {
+  font-size: 18px;
+}
+
+.schema-type-name {
+  display: -webkit-inline-flex;
+  color: rgb(67, 112, 165);
+  margin-right: 3px;
+}
+
+.schema-type-link {
+  cursor: pointer;
+  display: -webkit-inline-flex;
+  color: rgb(213, 178, 89);
+}
+
+.schema-type-link:hover {
+  text-decoration-line: underline;
+}
+
+.schema-type-underlying {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.schema-type-underlying:hover {
+  background-color: #f4f4f4;
+}
