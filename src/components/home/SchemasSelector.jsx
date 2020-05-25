@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 
+import { useHistory } from 'react-router-dom';
+
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
 import CREATE_SCHEMA from 'graphql/mutations/schemas/createSchema';
@@ -10,6 +12,7 @@ import Loading from '../common/Loading';
 
 const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
   const client = useApolloClient();
+  const history = useHistory();
   const [createSchema, { loading: schemaLoading }] = useMutation(CREATE_SCHEMA);
   const [deleteSchema, { loading: deleteSchemaLoading }] = useMutation(DELETE_SCHEMA);
   const [values, setValues] = useState({
@@ -93,6 +96,10 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
     }
   };
 
+  const redirectToSchemaPage = (id) => {
+    history.push(`schema/${id}`);
+  };
+
   const isEmptySchemas = schemas && schemas.schemas && schemas.schemas.length;
 
   return (
@@ -104,7 +111,11 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
           <div className={`schemas-list ${isEmptySchemas ? '' : ' empty'}`}>
             {isEmptySchemas &&
               schemas.schemas.map((schema) => (
-                <div key={schema.id} className="schema-item" onClick={() => console.log(schema.id)}>
+                <div
+                  key={schema.id}
+                  className="schema-item"
+                  onClick={() => redirectToSchemaPage(schema.id)}
+                >
                   <h5 className="schema-name">{schema.name}</h5>
                   <span className="schema-url">{schema.endpointUrl}</span>
                   <Button
