@@ -1,18 +1,18 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { useParams } from 'react-router-dom';
 
-import SCHEMA from 'graphql/queries/schemas/schema';
+import { useParams, Route } from 'react-router-dom';
+
+import SchemaViewerContainer from 'components/schema/SchemaViewerContainer';
 
 const SchemaPage = () => {
   const { schemaId } = useParams();
-  const { data, loading } = useQuery(SCHEMA, {
-    variables: {
-      id: schemaId,
-    },
-  });
 
-  return <div>{JSON.stringify(data, null, 2)}</div>;
+  return (
+    <Route
+      path="/schema/:schemaId/"
+      component={() => <SchemaViewerContainer schemaId={schemaId} />}
+    />
+  );
 };
 
 export default SchemaPage;

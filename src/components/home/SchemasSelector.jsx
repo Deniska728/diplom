@@ -5,10 +5,11 @@ import { useHistory } from 'react-router-dom';
 
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
+import Loading from 'components/common/Loading';
+
 import CREATE_SCHEMA from 'graphql/mutations/schemas/createSchema';
 import DELETE_SCHEMA from 'graphql/mutations/schemas/deleteSchema';
 import SCHEMAS from 'graphql/queries/schemas/schemas';
-import Loading from '../common/Loading';
 
 const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
   const client = useApolloClient();
