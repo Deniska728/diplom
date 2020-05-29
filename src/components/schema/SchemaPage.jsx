@@ -4,6 +4,7 @@ import { useParams, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import SchemaViewerContainer from 'components/schema/SchemaViewerContainer';
+import MembersPage from 'components/members/MembersPage';
 
 import { setCurrentSchema } from 'ducks/schemas';
 
@@ -17,7 +18,10 @@ const SchemaPage = () => {
 
   return (
     <React.Fragment>
-      <Route path="/schema/:schemaId/members" component={() => <div>members page</div>} />
+      <Route
+        path="/schema/:schemaId/members"
+        component={() => <MembersPage schemaId={schemaId} />}
+      />
       <Route
         path="/schema/:schemaId/"
         exact
