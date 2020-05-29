@@ -1,7 +1,11 @@
 import React from 'react';
+
+import { useSelector } from 'react-redux';
+
 import { Link, NavLink } from 'react-router-dom';
 
-const Sidebar = ({ user, schemaId }) => {
+const Sidebar = ({ user }) => {
+  const schemaId = useSelector((state) => state.schemas.currentSchemaId);
   const userAvatarUrl = (user && user.profile && user.profile.picture) || null;
 
   const userProfileStyle = {};
@@ -17,8 +21,11 @@ const Sidebar = ({ user, schemaId }) => {
       <div className="schema-links">
         {schemaId && (
           <div className="menu-item">
-            <NavLink className="item-link" to={`/schema/${schemaId}/comment`}>
-              C
+            <NavLink className="item-link" to={`/schema/${schemaId}`}>
+              S
+            </NavLink>
+            <NavLink className="item-link" to={`/schema/${schemaId}/members`}>
+              M
             </NavLink>
           </div>
         )}

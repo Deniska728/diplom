@@ -110,22 +110,23 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
           <Loading />
         ) : (
           <div className={`schemas-list ${isEmptySchemas ? '' : ' empty'}`}>
-            {isEmptySchemas &&
-              schemas.schemas.map((schema) => (
-                <div
-                  key={schema.id}
-                  className="schema-item"
-                  onClick={() => redirectToSchemaPage(schema.id)}
-                >
-                  <h5 className="schema-name">{schema.name}</h5>
-                  <span className="schema-url">{schema.endpointUrl}</span>
-                  <Button
-                    close
-                    onClick={(e) => handleDeleteSchema(e, schema.id)}
-                    disabled={deleteSchemaLoading}
-                  />
-                </div>
-              ))}
+            {isEmptySchemas
+              ? schemas.schemas.map((schema) => (
+                  <div
+                    key={schema.id}
+                    className="schema-item"
+                    onClick={() => redirectToSchemaPage(schema.id)}
+                  >
+                    <h5 className="schema-name">{schema.name}</h5>
+                    <span className="schema-url">{schema.endpointUrl}</span>
+                    <Button
+                      close
+                      onClick={(e) => handleDeleteSchema(e, schema.id)}
+                      disabled={deleteSchemaLoading}
+                    />
+                  </div>
+                ))
+              : ''}
           </div>
         )}
       </div>
