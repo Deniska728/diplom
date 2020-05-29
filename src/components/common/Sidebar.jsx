@@ -21,7 +21,7 @@ const Sidebar = ({ user }) => {
       <div className="schema-links">
         {schemaId && (
           <div className="menu-item">
-            <NavLink className="item-link" to={`/schema/${schemaId}`}>
+            <NavLink className="item-link" exact to={`/schema/${schemaId}`}>
               S
             </NavLink>
             <NavLink className="item-link" to={`/schema/${schemaId}/members`}>

@@ -19,7 +19,8 @@ const SchemaPage = () => {
     <React.Fragment>
       <Route path="/schema/:schemaId/members" component={() => <div>members page</div>} />
       <Route
-        path="/schema/:schemaId/" exact
+        path="/schema/:schemaId/"
+        exact
         component={() => (
           <div>
             <Route
