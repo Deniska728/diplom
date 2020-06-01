@@ -1,0 +1,32 @@
+.members-page {
+  height: 100%;
+  padding: 25px 50px;
+  overflow: scroll;
+
+  .members-list {
+    margin-top: 20px;
+
+    .members-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      .user-img {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .member-form {
+    display: flex;
+    margin-top: 50px;
+
+    .email-input {
+      margin-right: 20px;
+    }
+
+    .member-form-btn {
+      white-space: nowrap;
+    }
+  }
+}

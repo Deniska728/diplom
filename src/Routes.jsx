@@ -28,7 +28,10 @@ const Routes = () => {
                 path="/schema"
                 render={() => (
                   <Switch>
-                    <Route path="/schema/:schemaId/" component={SchemaPage} />
+                    <Route
+                      path="/schema/:schemaId/"
+                      component={() => <SchemaPage user={data.me} />}
+                    />
                     <Route component={EmptyPage} />
                   </Switch>
                 )}

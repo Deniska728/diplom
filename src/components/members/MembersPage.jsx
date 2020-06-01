@@ -5,12 +5,13 @@ import { useQuery } from '@apollo/react-hooks';
 
 import Loading from 'components/common/Loading';
 import MembersList from 'components/members/MembersList';
+import MemberForm from 'components/members/MemberForm';
 
-import SCHEMA from 'graphql/queries/schemas/schema';
+import MEMBERS from 'graphql/queries/members/members';
 
-const MembersPage = () => {
+const MembersPage = ({ user }) => {
   const { schemaId } = useParams();
-  const { data, loading } = useQuery(SCHEMA, {
+  const { data, loading } = useQuery(MEMBERS, {
     variables: {
       id: schemaId,
     },
@@ -18,9 +19,13 @@ const MembersPage = () => {
 
   if (loading) return <Loading />;
 
+  const schema = data && data.schema;
+
   return (
-    <div>
-      <MembersList members={data && data.schema && data.schema.members} />
+    <div className="members-page">
+      <h1>Members page</h1>
+      <MembersList schemaMembers={schema} user={user} />
+      {schema && user.id === schema.owner.id && <MemberForm schemaId={schemaId} />}
     </div>
   );
 };

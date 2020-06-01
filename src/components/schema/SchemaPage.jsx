@@ -8,7 +8,7 @@ import MembersPage from 'components/members/MembersPage';
 
 import { setCurrentSchema } from 'ducks/schemas';
 
-const SchemaPage = () => {
+const SchemaPage = ({ user }) => {
   const { schemaId } = useParams();
   const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const SchemaPage = () => {
     <React.Fragment>
       <Route
         path="/schema/:schemaId/members"
-        component={() => <MembersPage schemaId={schemaId} />}
+        component={() => <MembersPage schemaId={schemaId} user={user} />}
       />
       <Route
         path="/schema/:schemaId/"
