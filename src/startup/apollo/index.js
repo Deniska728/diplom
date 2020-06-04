@@ -1,11 +1,20 @@
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-import { ApolloLink } from 'apollo-link';
+import { WebSocketLink } from 'apollo-link-ws';
+import { getMainDefinition } from 'apollo-utilities';
+import { split, ApolloLink } from 'apollo-link';
 
 const cache = new InMemoryCache();
 
-const { REACT_APP_API_URL } = process.env;
+const { REACT_APP_API_URL, REACT_APP_WS_URL } = process.env;
+
+const wsLink = new WebSocketLink({
+  uri: REACT_APP_WS_URL,
+  options: {
+    reconnect: true,
+  },
+});
 
 const httpLink = new HttpLink({
   uri: REACT_APP_API_URL,
@@ -27,7 +36,16 @@ const authLink = (operation, forward) => {
 
 let links = [authLink, httpLink];
 
-const link = ApolloLink.from(links);
+const linkWithAuth = ApolloLink.from(links);
+
+const link = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+  },
+  wsLink,
+  linkWithAuth,
+);
 
 const client = new ApolloClient({
   link,
