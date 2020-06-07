@@ -4,7 +4,7 @@ import { Collapse } from 'reactstrap';
 
 import TypeList from 'components/schema/TypeList';
 
-const Schema = ({ schema }) => {
+const Schema = ({ schema, schemaId }) => {
   const [collapse, setCollapse] = useState({
     query: true,
     subscription: true,
@@ -37,7 +37,7 @@ const Schema = ({ schema }) => {
   const _union = schema.types.filter((type) => type.kind === 'UNION');
 
   return (
-    <div>
+    <div className="schema">
       {queries ? (
         <div className="schema-type clickable" onClick={() => toggle('query')}>
           type Query
@@ -47,7 +47,7 @@ const Schema = ({ schema }) => {
       )}
       <Collapse isOpen={collapse.query}>
         <div className="schema-type">
-          <TypeList types={queries} schemaId={schema.id} />
+          <TypeList types={queries} schemaId={schemaId} isHaveFields />
         </div>
       </Collapse>
       {mutations ? (
@@ -59,7 +59,7 @@ const Schema = ({ schema }) => {
       )}
       <Collapse isOpen={collapse.mutation}>
         <div className="schema-type">
-          <TypeList schemaId={schema.id} types={mutations} />
+          <TypeList schemaId={schemaId} types={mutations} isHaveFields />
         </div>
       </Collapse>
       {subscriptions ? (
@@ -71,21 +71,21 @@ const Schema = ({ schema }) => {
       )}
       <Collapse isOpen={collapse.subscription}>
         <div className="schema-type">
-          <TypeList schemaId={schema.id} types={subscriptions} />
+          <TypeList schemaId={schemaId} types={subscriptions} isHaveFields />
         </div>
       </Collapse>
       <div className="schema-type">
         <div className="schema-type clickable">Object</div>
-        <TypeList kind="OBJECT" types={_object} schemaId={schema.id} />
+        <TypeList kind="OBJECT" types={_object} schemaId={schemaId} />
       </div>
       <div className="schema-type">
         <div className="schema-type clickable">Enum</div>
-        <TypeList kind="ENUM" types={_enum} schemaId={schema.id} />
+        <TypeList kind="ENUM" types={_enum} schemaId={schemaId} />
       </div>
       {_input ? (
         <div className="schema-type">
           <div className="schema-type clickable">Input</div>
-          <TypeList kind="INPUT_OBJECT" types={_input} schemaId={schema.id} />
+          <TypeList kind="INPUT_OBJECT" types={_input} schemaId={schemaId} />
         </div>
       ) : (
         ''
@@ -93,19 +93,19 @@ const Schema = ({ schema }) => {
       {_union.length ? (
         <div className="schema-type">
           <div className="schema-type clickable">Union</div>
-          <TypeList kind="UNION" types={_union} schemaId={schema.id} />
+          <TypeList kind="UNION" types={_union} schemaId={schemaId} />
         </div>
       ) : (
         ''
       )}
       <div className="schema-type">
         <div className="schema-type clickable">Scalar</div>
-        <TypeList kind="SCALAR" types={_scalar} schemaId={schema.id} />
+        <TypeList kind="SCALAR" types={_scalar} schemaId={schemaId} />
       </div>
       {_interface.length ? (
         <div className="schema-type clickable">
           <div className="schema-type clickable">Interface</div>
-          <TypeList kind="INTERFACE" types={_interface} schemaId={schema.id} />
+          <TypeList kind="INTERFACE" types={_interface} schemaId={schemaId} />
         </div>
       ) : (
         ''

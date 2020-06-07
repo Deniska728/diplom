@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { Link } from 'react-router-dom';
 
 import Arguments from 'components/schema/Arguments';
 
 import getFields from './getFields';
 import parseKinds from './parseKinds';
 
-const TypeList = ({ types, kind, schemaId }) => {
+const TypeList = ({ types, kind, schemaId, isHaveFields }) => {
   if (!types) return '';
   const typesFields = types.map ? types : types.fields;
 
@@ -23,36 +25,39 @@ const TypeList = ({ types, kind, schemaId }) => {
           const fields = getFields(type);
 
           return (
-            <div
+            <Link
               key={type.name + type.id}
-              id={type.name}
-              className={kind ? 'schema-type-type' : 'schema-type-underlying'}
+              to={`/schema/${schemaId}/comment/${type.name}/${
+                isHaveFields ? 'field' + type.id : type.id
+              }`}
             >
-              <span className="schema-type-name">{type.name}</span>
-              {kind === 'SCALAR' && type.description && (
-                <div
-                  className="schema-type-description"
-                  style={{ paddingLeft: 15 }}
-                >{`"""${type.description}"""`}</div>
-              )}
-              {type.interfaces && type.interfaces[0] && type.interfaces[0].name ? (
-                <span>
-                  {' '}
-                  implements{' '}
-                  <span className="schema-type-implement">{type.interfaces[0].name}</span>
-                </span>
-              ) : (
-                ''
-              )}
+              <div id={type.name} className={kind ? 'schema-type-type' : 'schema-type-underlying'}>
+                <span className="schema-type-name">{type.name}</span>
+                {kind === 'SCALAR' && type.description && (
+                  <div
+                    className="schema-type-description"
+                    style={{ paddingLeft: 15 }}
+                  >{`"""${type.description}"""`}</div>
+                )}
+                {type.interfaces && type.interfaces[0] && type.interfaces[0].name ? (
+                  <span>
+                    {' '}
+                    implements{' '}
+                    <span className="schema-type-implement">{type.interfaces[0].name}</span>
+                  </span>
+                ) : (
+                  ''
+                )}
 
-              {fields ? (kindArgs ? ' {' : !kind ? ' (' : '') : ''}
-              <Arguments kind={kind} type={type} schemaId={schemaId} fields={fields} />
-              {fields ? (kindArgs ? '}' : !kind ? ') ' : ' ') : ''}
+                {fields ? (kindArgs ? ' {' : !kind ? ' (' : '') : ''}
+                <Arguments kind={kind} type={type} schemaId={schemaId} fields={fields} />
+                {fields ? (kindArgs ? '}' : !kind ? ') ' : ' ') : ''}
 
-              <div className="schema-type-link" onClick={() => handleClick(type)}>
-                {!kind && ': ' + (type && parseKinds(type))}
+                <div className="schema-type-link" onClick={() => handleClick(type)}>
+                  {!kind && ': ' + (type && parseKinds(type))}
+                </div>
               </div>
-            </div>
+            </Link>
           );
         })}
     </div>

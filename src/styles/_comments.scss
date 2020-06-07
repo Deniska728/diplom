@@ -1,0 +1,10 @@
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 350px;
+
+  height: 100%;
+  border-left: 1px solid $border-color;
+  background: rgb(250, 250, 254);
+}

@@ -1,11 +1,13 @@
-.schema-viewer-wrapper {
-  height: 100%;
+.schema-page-wrapper {
+  display: flex;
   overflow: scroll;
-}
+  height: 100%;
+  max-height: 100vh;
 
-.schema {
-  margin-left: 10px;
-  margin-right: 25px;
+  .schema {
+    overflow: scroll;
+    max-height: 100vh;
+  }
 }
 
 .schema-type {

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 
-import { useParams, Route } from 'react-router-dom';
+import { useParams, Route, Redirect, Router } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import SchemaViewerContainer from 'components/schema/SchemaViewerContainer';
 import MembersPage from 'components/members/MembersPage';
+import Comments from 'components/comments/Comments';
 
 import { setCurrentSchema } from 'ducks/schemas';
 
@@ -24,12 +25,20 @@ const SchemaPage = ({ user }) => {
       />
       <Route
         path="/schema/:schemaId/"
-        exact
         component={() => (
-          <div>
+          <div className="schema-page-wrapper">
             <Route
+              exact
               path="/schema/:schemaId/"
+              render={() => <Redirect to={`/schema/${schemaId}/comment`} />}
+            />
+            <Route
+              path="/schema/:schemaId/comment"
               component={() => <SchemaViewerContainer schemaId={schemaId} />}
+            />
+            <Route
+              path="/schema/:schemaId/comment/:entity/:entityId"
+              component={() => <Comments />}
             />
           </div>
         )}
