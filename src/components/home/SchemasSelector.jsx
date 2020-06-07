@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
@@ -69,7 +70,7 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
             });
             setValues({ url: '', apiKey: '', apiKeyName: '' });
           })
-          .catch((err) => console.error(err.message));
+          .catch((err) => toast.error(err.message));
       } else {
         window.alert('Enter endpoint url');
       }

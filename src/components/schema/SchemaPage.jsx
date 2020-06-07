@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useParams, Route, Redirect, Router } from 'react-router-dom';
+import { useParams, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import SchemaViewerContainer from 'components/schema/SchemaViewerContainer';
@@ -38,7 +38,7 @@ const SchemaPage = ({ user }) => {
             />
             <Route
               path="/schema/:schemaId/comment/:entity/:entityId"
-              component={() => <Comments />}
+              component={() => <Comments user={user} schemaId={schemaId} />}
             />
           </div>
         )}

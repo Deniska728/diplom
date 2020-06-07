@@ -13,6 +13,11 @@ const wsLink = new WebSocketLink({
   uri: REACT_APP_WS_URL,
   options: {
     reconnect: true,
+    connectionParams: {
+      Authorization: localStorage.getItem('access_token')
+        ? `Bearer ${localStorage.getItem('access_token')}`
+        : '',
+    },
   },
 });
 

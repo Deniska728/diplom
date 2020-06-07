@@ -1,6 +1,8 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
+import { Switch, Route, Redirect } from 'react-router-dom';
+
+import { ToastContainer } from 'react-toastify';
 
 import Home from 'components/home/Home';
 
@@ -18,48 +20,61 @@ const Routes = () => {
   if (loading) return <Loading page />;
 
   return (
-    <Switch>
-      <Route exact path="/" render={() => <Home user={userId} meRefetch={refetch} />} />
-      {userId && (
-        <Route path="/">
-          <Layout user={data.me}>
-            <Switch>
-              <Route
-                path="/schema"
-                render={() => (
-                  <Switch>
-                    <Route
-                      path="/schema/:schemaId/"
-                      component={() => <SchemaPage user={data.me} />}
-                    />
-                    <Route component={EmptyPage} />
-                  </Switch>
-                )}
-              />
-              <Route
-                path="/profile"
-                render={() => (
-                  <div className="empty-page">
-                    <div className="logo-container">
-                      <div className="logo-heading">
-                        <h1 className="logo">
-                          Graph<span className="logo-letter">Q</span>q
-                        </h1>
-                        <h5 className="subheading">GraphQL Schema collaboration tool</h5>
+    <React.Fragment>
+      <Switch>
+        <Route exact path="/" render={() => <Home user={userId} meRefetch={refetch} />} />
+        {userId && (
+          <Route path="/">
+            <Layout user={data.me}>
+              <Switch>
+                <Route
+                  path="/schema"
+                  render={() => (
+                    <Switch>
+                      <Route
+                        path="/schema/:schemaId/"
+                        component={() => <SchemaPage user={data.me} />}
+                      />
+                      <Route component={EmptyPage} />
+                    </Switch>
+                  )}
+                />
+                <Route
+                  path="/profile"
+                  render={() => (
+                    <div className="empty-page">
+                      <div className="logo-container">
+                        <div className="logo-heading">
+                          <h1 className="logo">
+                            Graph<span className="logo-letter">Q</span>q
+                          </h1>
+                          <h5 className="subheading">GraphQL Schema collaboration tool</h5>
+                        </div>
                       </div>
+                      <span className="description">
+                        We're working on this feature. It will be available in next releases.
+                      </span>
                     </div>
-                    <span className="description">
-                      We're working on this feature. It will be available in next releases.
-                    </span>
-                  </div>
-                )}
-              />
-            </Switch>
-          </Layout>
-        </Route>
-      )}
-      {!userId && <Route render={() => <Redirect to="/" />} />}
-    </Switch>
+                  )}
+                />
+              </Switch>
+            </Layout>
+          </Route>
+        )}
+        {!userId && <Route render={() => <Redirect to="/" />} />}
+      </Switch>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </React.Fragment>
   );
 };
 

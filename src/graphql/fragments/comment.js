@@ -7,6 +7,7 @@ export default gql`
       message
     }
     createdBy {
+      id
       username
       profile {
         firstName

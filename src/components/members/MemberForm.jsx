@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 
+import { toast } from 'react-toastify';
+
 import { Form, Input, Button } from 'reactstrap';
 
 import MEMBERS from 'graphql/queries/members/members';
@@ -48,7 +50,7 @@ const MemberForm = ({ schemaId }) => {
 
           setValue('');
         })
-        .catch((err) => console.log(err.message));
+        .catch((err) => toast.error(err.message));
     } else {
       alert('Enter e-mail');
     }
@@ -56,7 +58,13 @@ const MemberForm = ({ schemaId }) => {
 
   return (
     <Form onSubmit={handleSubmit} className="member-form">
-      <Input placeholder="E-mail" onChange={handleChange} value={value} className="email-input" />
+      <Input
+        type="email"
+        placeholder="E-mail"
+        onChange={handleChange}
+        value={value}
+        className="email-input"
+      />
       <Button color="primary" disabled={loading} className="member-form-btn">
         Add member
       </Button>
