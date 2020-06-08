@@ -1,4 +1,5 @@
 .comments-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -101,6 +102,12 @@
     }
   }
 
+  .no-comments {
+    position: absolute;
+    top: calc(50% - 12px);
+    left: calc(50% - 66px);
+  }
+
   .comment-form-container {
     border-top: 1px solid $border-color;
     padding: 24px 15px;
@@ -127,6 +134,7 @@
         background-color: transparent;
         outline: none;
         border: 0;
+        min-width: 45px;
       }
     }
   }

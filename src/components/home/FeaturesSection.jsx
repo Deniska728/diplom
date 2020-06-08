@@ -5,19 +5,22 @@ import { Container } from 'reactstrap';
 const features = [
   {
     name: 'Comments',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    description: 'Add a graphql schema and discuss it with your colleagues.',
     color: '#23a393',
   },
   {
     name: 'Schema Designer',
-    comingSoon: true,
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    description: 'Try it in the application ',
+    link: {
+      href: 'https://fujix.io/',
+      name: 'Fuji X',
+    },
     color: '#1f4287',
   },
   {
     name: 'Schema Versions',
     comingSoon: true,
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    description: 'This feature will be added in the next releases.',
     color: '#fd0054',
   },
 ];
@@ -31,7 +34,14 @@ const FeaturesSection = () => {
             <h5 className="feature-name" style={{ color: f.color }}>
               {f.name}
             </h5>
-            <p className="feature-description">{f.description}</p>
+            <p className="feature-description">
+              {f.description}
+              {f.link ? (
+                <a href={f.link.href} target="_blank" rel="noopener noreferrer">
+                  {f.link.name}
+                </a>
+              ) : null}
+            </p>
             {f.comingSoon && <span className="coming-soon">Coming soon</span>}
           </div>
         ))}

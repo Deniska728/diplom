@@ -99,7 +99,7 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
   };
 
   const redirectToSchemaPage = (id) => {
-    history.push(`schema/${id}`);
+    history.push(`schema/${id}/comment`);
   };
 
   const isEmptySchemas = schemas && schemas.schemas && schemas.schemas.length;

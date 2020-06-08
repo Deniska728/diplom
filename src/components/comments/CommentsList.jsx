@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { NotificationManager } from 'react-notifications';
+import { toast } from 'react-toastify';
 
 import dayjs from 'dayjs';
 
@@ -107,32 +107,35 @@ const CommentsList = ({ entity, schemaId, user }) => {
           __typename: 'Bug',
         },
       },
-    }).catch((err) => NotificationManager.error(err.message, '', 3000));
+    }).catch((err) => toast.error(err.message));
   };
 
   return (
-    <div className="comments-list">
-      {data &&
-        data.comments.map((comment) => (
-          <div className="comment" key={comment.id}>
-            <div className="comment-header">
-              <img src={comment.createdBy.profile.picture} width="36" height="36" alt="" />
-              <span className="username">{comment.createdBy.profile.fullName}</span>
-              <span className="created-at">{dayjs(comment.createdAt).format('HH:mm')}</span>
-              {user.id === comment.createdBy.id && (
-                <button
-                  className="delete-comment"
-                  disabled={deleteLoading}
-                  onClick={() => handleDelete(comment.id)}
-                >
-                  <span>×</span>
-                </button>
-              )}
+    <React.Fragment>
+      <div className="comments-list">
+        {data &&
+          data.comments.map((comment) => (
+            <div className="comment" key={comment.id}>
+              <div className="comment-header">
+                <img src={comment.createdBy.profile.picture} width="36" height="36" alt="" />
+                <span className="username">{comment.createdBy.profile.fullName}</span>
+                <span className="created-at">{dayjs(comment.createdAt).format('HH:mm')}</span>
+                {user.id === comment.createdBy.id && (
+                  <button
+                    className="delete-comment"
+                    disabled={deleteLoading}
+                    onClick={() => handleDelete(comment.id)}
+                  >
+                    <span>×</span>
+                  </button>
+                )}
+              </div>
+              <div className="comment-body">{comment.content.message}</div>
             </div>
-            <div className="comment-body">{comment.content.message}</div>
-          </div>
-        ))}
-    </div>
+          ))}
+      </div>
+      {data && !data.comments.length && <p className="no-comments">No comments yet.</p>}
+    </React.Fragment>
   );
 };
 

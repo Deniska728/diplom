@@ -27,7 +27,6 @@ const httpLink = new HttpLink({
 });
 
 const authLink = (operation, forward) => {
-  console.log('Аuth with Token', { token: localStorage.getItem('access_token') });
   const token = localStorage.getItem('access_token') || null;
   operation.setContext({
     headers: {

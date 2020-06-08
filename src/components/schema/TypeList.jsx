@@ -30,6 +30,7 @@ const TypeList = ({ types, kind, schemaId, isHaveFields }) => {
               to={`/schema/${schemaId}/comment/${type.name}/${
                 isHaveFields ? 'field' + type.id : type.id
               }`}
+              className="type-link"
             >
               <div id={type.name} className={kind ? 'schema-type-type' : 'schema-type-underlying'}>
                 <span className="schema-type-name">{type.name}</span>
