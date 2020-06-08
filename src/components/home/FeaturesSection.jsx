@@ -20,7 +20,7 @@ const features = [
   {
     name: 'Schema Versions',
     comingSoon: true,
-    description: 'This feature will be added in the next releases.',
+    description: "We're working on this feature. It will be available in next releases.",
     color: '#fd0054',
   },
 ];

@@ -70,9 +70,9 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
             });
             setValues({ url: '', apiKey: '', apiKeyName: '' });
           })
-          .catch((err) => toast.error(err.message));
+          .catch((err) => err.graphQLErrors.map(({ message }) => toast.error(message)));
       } else {
-        window.alert('Enter endpoint url');
+        toast.error('Enter endpoint url');
       }
     } else {
       runAuthLock();
