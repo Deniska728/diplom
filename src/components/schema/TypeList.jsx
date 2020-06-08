@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -14,7 +14,10 @@ const TypeList = ({ types, kind, schemaId, isHaveFields }) => {
   const kindArgs =
     kind === 'OBJECT' || kind === 'INPUT_OBJECT' || kind === 'INTERFACE' || kind === 'ENUM';
 
-  const handleClick = (type) => {
+  const handleClick = (e, type) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     document.getElementById(type.typeName).scrollIntoView();
   };
 
@@ -54,7 +57,7 @@ const TypeList = ({ types, kind, schemaId, isHaveFields }) => {
                 <Arguments kind={kind} type={type} schemaId={schemaId} fields={fields} />
                 {fields ? (kindArgs ? '}' : !kind ? ') ' : ' ') : ''}
 
-                <div className="schema-type-link" onClick={() => handleClick(type)}>
+                <div className="schema-type-link" onClick={(e) => handleClick(e, type)}>
                   {!kind && ': ' + (type && parseKinds(type))}
                 </div>
               </div>
