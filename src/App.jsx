@@ -3,6 +3,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
+import MeContextProvider from 'components/auth/MeContextProvider';
 import Routes from './Routes';
 
 import client from 'startup/apollo';
@@ -12,7 +13,9 @@ const App = () => (
   <Provider store={store}>
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <Routes />
+        <MeContextProvider>
+          <Routes />
+        </MeContextProvider>
       </BrowserRouter>
     </ApolloProvider>
   </Provider>

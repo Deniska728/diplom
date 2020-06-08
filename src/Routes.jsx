@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Router } from 'react-router-dom';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -8,6 +8,8 @@ import Home from 'components/home/Home';
 
 import Layout from 'components/Layout';
 import Loading from 'components/common/Loading';
+import SignIn from 'components/auth/SignIn';
+import SignUp from 'components/auth/SignUp';
 import SchemaPage from 'components/schema/SchemaPage';
 import EmptyPage from 'components/schema/EmptyPage';
 
@@ -23,6 +25,8 @@ const Routes = () => {
     <React.Fragment>
       <Switch>
         <Route exact path="/" render={() => <Home user={userId} meRefetch={refetch} />} />
+        <Route path="/sign-in" render={() => <SignIn />} />
+        <Route path="/sign-up" render={() => <SignUp />} />
         {userId && (
           <Route path="/">
             <Layout user={data.me}>

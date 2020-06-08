@@ -12,7 +12,7 @@ import CREATE_SCHEMA from 'graphql/mutations/schemas/createSchema';
 import DELETE_SCHEMA from 'graphql/mutations/schemas/deleteSchema';
 import SCHEMAS from 'graphql/queries/schemas/schemas';
 
-const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
+const SchemasSelector = ({ user, schemas, loading }) => {
   const client = useApolloClient();
   const history = useHistory();
   const [createSchema, { loading: schemaLoading }] = useMutation(CREATE_SCHEMA);
@@ -47,7 +47,7 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
 
     const { url, apiKeyName, apiKey } = values;
 
-    if (user) {
+    if (user.id) {
       if (url) {
         const variables = {
           endpoint: url,
@@ -75,7 +75,7 @@ const SchemasSelector = ({ user, runAuthLock, schemas, loading }) => {
         toast.error('Enter endpoint url');
       }
     } else {
-      runAuthLock();
+      toast.error('To add a schema you need to log in to your account.');
     }
   };
 

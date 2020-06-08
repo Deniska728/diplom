@@ -14,6 +14,17 @@
       .user-img {
         border-radius: 50%;
       }
+
+      .no-picture {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+        border-radius: 50%;
+        background-color: rgb(252, 184, 184);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 

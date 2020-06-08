@@ -71,13 +71,21 @@ const MembersList = ({ schemaMembers, user }) => {
     <ListGroup className="members-list">
       {members.map((member) => (
         <ListGroupItem key={member.id} className="members-list-item">
-          <img
-            src={member.profile.picture}
-            alt=""
-            className="user-img"
-            width="50px"
-            height="50px"
-          />
+          {member.profile && member.profile.picture ? (
+            <img
+              src={member.profile.picture}
+              className="user-img"
+              width="50px"
+              height="50px"
+              alt=""
+            />
+          ) : (
+            <div className="no-picture">
+              {member.profile
+                ? member.profile.firstName[0] + member.profile.lastName[0]
+                : member.username[0]}
+            </div>
+          )}
           <span className="user-username">{member.username}</span>
           <span className="user-email">{member.email}</span>
           <Button
