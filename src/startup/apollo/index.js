@@ -27,11 +27,11 @@ const httpLink = new HttpLink({
 });
 
 const authLink = (operation, forward) => {
-  const token = localStorage.getItem('access_token') || null;
+  const token = localStorage.getItem('access_token') || '';
   operation.setContext({
     headers: {
       ...operation.getContext().headers,
-      Authorization: token ? `Bearer ${token}` : null,
+      Authorization: token ? `Bearer ${token}` : '',
     },
   });
 

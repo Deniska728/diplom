@@ -114,23 +114,33 @@ const CommentsList = ({ entity, schemaId, user }) => {
     <React.Fragment>
       <div className="comments-list">
         {data &&
-          data.comments.map((comment) => (
-            <div className="comment" key={comment.id}>
+          data.comments.map(({ createdAt, createdBy, id, content }) => (
+            <div className="comment" key={id}>
               <div className="comment-header">
-                <img src={comment.createdBy.profile.picture} width="36" height="36" alt="" />
-                <span className="username">{comment.createdBy.profile.fullName}</span>
-                <span className="created-at">{dayjs(comment.createdAt).format('HH:mm')}</span>
-                {user.id === comment.createdBy.id && (
+                {createdBy.profile && createdBy.profile.picture ? (
+                  <img src={createdBy.profile.picture} width="36" height="36" alt="" />
+                ) : (
+                  <div className="no-picture">
+                    {createdBy.profile
+                      ? createdBy.profile.firstName[0] + createdBy.profile.lastName[0]
+                      : createdBy.username[0]}
+                  </div>
+                )}
+                <span className="username">
+                  {createdBy.profile ? createdBy.profile.fullName : createdBy.username}
+                </span>
+                <span className="created-at">{dayjs(createdAt).format('HH:mm')}</span>
+                {user.id === createdBy.id && (
                   <button
                     className="delete-comment"
                     disabled={deleteLoading}
-                    onClick={() => handleDelete(comment.id)}
+                    onClick={() => handleDelete(id)}
                   >
                     <span>×</span>
                   </button>
                 )}
               </div>
-              <div className="comment-body">{comment.content.message}</div>
+              <div className="comment-body">{content.message}</div>
             </div>
           ))}
       </div>

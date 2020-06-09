@@ -1,35 +1,46 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import React, { useContext, useEffect } from 'react';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
+import { useHistory } from 'react-router-dom';
 
 import { Container, Row, Col, Button } from 'reactstrap';
 
 import SchemasSelector from 'components/home/SchemasSelector';
 import FeaturesSection from 'components/home/FeaturesSection';
-import authLockRunner from 'components/auth/authLockRunner';
 
 import SCHEMAS from 'graphql/queries/schemas/schemas';
+import MeContext from 'components/auth/MeContext';
 
-const Home = ({ user, meRefetch }) => {
+const Home = () => {
+  const client = useApolloClient();
+  const { me, logout } = useContext(MeContext);
+  const history = useHistory();
   const { data, loading, refetch } = useQuery(SCHEMAS);
 
-  const runAuthLock = () => {
-    if (user) {
+  const handleClick = () => {
+    if (me.id) {
       if (window.confirm('Are you sure? Logout?')) {
-        window.logout();
+        logout();
+        client.writeQuery({
+          query: SCHEMAS,
+          data: { schemas: [] },
+        });
       }
     } else {
-      const lock = authLockRunner({ meRefetch, authCallback: refetch });
-      lock.show();
+      history.push('/sign-in');
     }
   };
+
+  useEffect(() => {
+    if (me.id) refetch();
+  }, [me, refetch]);
 
   return (
     <div className="home-page">
       <Container>
         <Row className="login-row">
           <Col sm={12}>
-            <Button color="link" className="login-link" onClick={runAuthLock}>
-              {user ? 'Log out' : 'Log in'}
+            <Button color="link" className="login-link" onClick={handleClick}>
+              {me.id ? 'Log out' : 'Log in'}
             </Button>
           </Col>
         </Row>
@@ -47,12 +58,7 @@ const Home = ({ user, meRefetch }) => {
             </Col>
             <Col md={5}>
               <div className="schemas-container">
-                <SchemasSelector
-                  schemas={data}
-                  loading={loading}
-                  runAuthLock={runAuthLock}
-                  user={user}
-                />
+                <SchemasSelector schemas={data} loading={loading} user={me} />
               </div>
             </Col>
             <Col md={7} className="hidden-sm">
