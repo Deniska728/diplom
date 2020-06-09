@@ -63,7 +63,12 @@ const SignIn = () => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="password">Email</Label>
+            <div className="d-flex justify-content-between align-items-center">
+              <Label for="password">Password</Label>
+              <Link to="/reset-password" className="forgot-password">
+                Forgot password?
+              </Link>
+            </div>
             <Input
               type="password"
               id="password"

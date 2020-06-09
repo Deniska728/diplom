@@ -1,6 +1,5 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { Switch, Route, Redirect, Router } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -13,32 +12,29 @@ import SignUp from 'components/auth/SignUp';
 import SchemaPage from 'components/schema/SchemaPage';
 import EmptyPage from 'components/schema/EmptyPage';
 
-import ME from 'graphql/queries/user/me';
+import MeContext from 'components/auth/MeContext';
 
 const Routes = () => {
-  const { data, loading, refetch } = useQuery(ME);
-  const userId = data && data.me && data.me.id;
+  const { me, loading, refetchMe } = useContext(MeContext);
+  const userId = me && me.id;
 
   if (loading) return <Loading page />;
 
   return (
     <React.Fragment>
       <Switch>
-        <Route exact path="/" render={() => <Home user={userId} meRefetch={refetch} />} />
+        <Route exact path="/" render={() => <Home user={userId} meRefetch={refetchMe} />} />
         <Route path="/sign-in" render={() => <SignIn />} />
         <Route path="/sign-up" render={() => <SignUp />} />
         {userId && (
           <Route path="/">
-            <Layout user={data.me}>
+            <Layout user={me}>
               <Switch>
                 <Route
                   path="/schema"
                   render={() => (
                     <Switch>
-                      <Route
-                        path="/schema/:schemaId/"
-                        component={() => <SchemaPage user={data.me} />}
-                      />
+                      <Route path="/schema/:schemaId/" component={() => <SchemaPage user={me} />} />
                       <Route component={EmptyPage} />
                     </Switch>
                   )}
