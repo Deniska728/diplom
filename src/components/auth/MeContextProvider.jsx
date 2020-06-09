@@ -17,11 +17,13 @@ const MeContextProvider = ({ children }) => {
   }, [meQuery]);
 
   const loading = meQuery.loading;
-  const isAuthenticated = !loading && user && user.id;
+
+  let isAuthenticated = !!(!loading && meQuery.data && meQuery.data.me && meQuery.data.me.id);
 
   const logout = () => {
     setUser({});
     localStorage.removeItem('access_token');
+    meQuery.refetch();
   };
 
   return (

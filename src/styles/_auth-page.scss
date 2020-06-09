@@ -13,6 +13,21 @@
       font-size: 14px;
     }
 
+    .input-with-icon {
+      position: relative;
+
+      input {
+        padding-right: 30px;
+      }
+
+      .icon {
+        position: absolute;
+        top: calc(50% - 13px);
+        right: 10px;
+        user-select: none;
+      }
+    }
+
     .forgot-password {
       font-size: 12px;
       color: $main;
@@ -43,6 +58,24 @@
 
       &:active:focus {
         box-shadow: 0 0 0 0.2rem rgba(33, 230, 194, 0.41);
+      }
+    }
+
+    .question-btn {
+      background-color: $secondary-btn;
+      border-color: $secondary-btn;
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem transparentize($color: $secondary-btn, $amount: 0.4);
+      }
+
+      &:active {
+        background-color: $secondary-btn;
+        border-color: $secondary-btn;
+      }
+
+      &:active:focus {
+        box-shadow: 0 0 0 0.2rem transparentize($color: $secondary-btn, $amount: 0.4);
       }
     }
   }

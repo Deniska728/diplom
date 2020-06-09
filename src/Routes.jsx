@@ -9,13 +9,15 @@ import Layout from 'components/Layout';
 import Loading from 'components/common/Loading';
 import SignIn from 'components/auth/SignIn';
 import SignUp from 'components/auth/SignUp';
+import ResetPassword from 'components/auth/ResetPassword';
+import ChangePassword from 'components/auth/ChangePassword';
 import SchemaPage from 'components/schema/SchemaPage';
 import EmptyPage from 'components/schema/EmptyPage';
 
 import MeContext from 'components/auth/MeContext';
 
 const Routes = () => {
-  const { me, loading, refetchMe } = useContext(MeContext);
+  const { me, loading, refetchMe, isAuthenticated } = useContext(MeContext);
   const userId = me && me.id;
 
   if (loading) return <Loading page />;
@@ -24,9 +26,18 @@ const Routes = () => {
     <React.Fragment>
       <Switch>
         <Route exact path="/" render={() => <Home user={userId} meRefetch={refetchMe} />} />
-        <Route path="/sign-in" render={() => <SignIn />} />
-        <Route path="/sign-up" render={() => <SignUp />} />
-        {userId && (
+        <Route path="/sign-in" component={SignIn} />
+        <Route path="/sign-up" component={SignUp} />
+        <Route
+          path="/reset-password"
+          render={() => (
+            <Switch>
+              <Route exact path="/reset-password" component={ResetPassword} />
+              <Route path="/reset-password/:resetPasswordToken" component={ChangePassword} />
+            </Switch>
+          )}
+        />
+        {isAuthenticated && (
           <Route path="/">
             <Layout user={me}>
               <Switch>
@@ -61,7 +72,7 @@ const Routes = () => {
             </Layout>
           </Route>
         )}
-        {!userId && <Route render={() => <Redirect to="/" />} />}
+        {!isAuthenticated && <Route render={() => <Redirect to="/" />} />}
       </Switch>
       <ToastContainer
         position="top-center"

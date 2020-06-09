@@ -4,6 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { useHistory, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 
 import Loading from 'components/common/Loading';
@@ -13,12 +14,13 @@ import MeContext from './MeContext';
 
 const SignIn = () => {
   const history = useHistory();
-  const { setUser } = useContext(MeContext);
+  const { setUser, refetchMe } = useContext(MeContext);
   const [signIn, { loading }] = useMutation(LOGIN);
   const [{ email, password }, setValue] = useState({
     email: '',
     password: '',
   });
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = ({ target: { value, name } }) => {
     setValue((prev) => ({
@@ -40,11 +42,14 @@ const SignIn = () => {
         .then(({ data }) => {
           localStorage.setItem('access_token', data.signIn.token);
           setUser(data.signIn.user);
+          refetchMe();
           history.push('/');
         })
         .catch((err) => err.graphQLErrors.map(({ message }) => toast.error(message)));
     }
   };
+
+
 
   return (
     <div className="auth-page">
@@ -69,14 +74,19 @@ const SignIn = () => {
                 Forgot password?
               </Link>
             </div>
-            <Input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={handleChange}
-              required
-            />
+            <div className="input-with-icon">
+              <Input
+                type={isOpen ? 'text' : 'password'}
+                id="password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+                required
+              />
+              <div className="icon" onClick={() => setIsOpen(!isOpen)}>
+                {isOpen ? <FaEye /> : <FaEyeSlash />}
+              </div>
+            </div>
           </FormGroup>
           <div className="d-flex justify-content-between">
             <Button className="submit">Submit {loading ? <Loading invert /> : null}</Button>
