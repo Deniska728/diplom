@@ -13,6 +13,7 @@ import ResetPassword from 'components/auth/ResetPassword';
 import ChangePassword from 'components/auth/ChangePassword';
 import SchemaPage from 'components/schema/SchemaPage';
 import EmptyPage from 'components/schema/EmptyPage';
+import Profile from 'components/profile/Profile';
 
 import MeContext from 'components/auth/MeContext';
 
@@ -50,24 +51,7 @@ const Routes = () => {
                     </Switch>
                   )}
                 />
-                <Route
-                  path="/profile"
-                  render={() => (
-                    <div className="empty-page">
-                      <div className="logo-container">
-                        <div className="logo-heading">
-                          <h1 className="logo">
-                            Graph<span className="logo-letter">Q</span>q
-                          </h1>
-                          <h5 className="subheading">GraphQL Schema collaboration tool</h5>
-                        </div>
-                      </div>
-                      <span className="description">
-                        We're working on this feature. It will be available in next releases.
-                      </span>
-                    </div>
-                  )}
-                />
+                <Route path="/profile" component={Profile} />
               </Switch>
             </Layout>
           </Route>

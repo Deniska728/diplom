@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
+import { AiOutlineSend } from 'react-icons/ai';
+
 import Loading from 'components/common/Loading';
 
 import CREATE_COMMENT from 'graphql/mutations/comments/createComment';
@@ -44,7 +46,7 @@ const CommentsForm = ({ schemaId, entity }) => {
           required
         />
         <button type="submit" disabled={loading}>
-          {loading ? <Loading /> : 'Send'}
+          {loading ? <Loading /> : <AiOutlineSend />}
         </button>
       </form>
     </div>
