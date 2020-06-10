@@ -1,37 +1,43 @@
 import React from 'react';
-
 import { useSelector } from 'react-redux';
 
 import { Link, NavLink } from 'react-router-dom';
+import { GrGraphQl } from 'react-icons/gr';
+import { FaUsers, FaArrowLeft } from 'react-icons/fa';
 
 const Sidebar = ({ user }) => {
   const schemaId = useSelector((state) => state.schemas.currentSchemaId);
+
+  if (!user.id) return <div />;
   const userAvatarUrl = (user && user.profile && user.profile.picture) || null;
 
   const userProfileStyle = {};
   if (userAvatarUrl) userProfileStyle.backgroundImage = `url(${userAvatarUrl})`;
 
+  const letter =
+    !userAvatarUrl && user.profile.firstName ? user.profile.firstName[0] : user.profile.username[0];
+
   return (
     <div className="sidebar">
       <div className="logo">
         <Link to="/" className="logo-link">
-          Qq
+          <FaArrowLeft />
         </Link>
       </div>
       <div className="schema-links">
         {schemaId && (
           <div className="menu-item">
             <NavLink className="item-link" to={`/schema/${schemaId}/comment`}>
-              S
+              <GrGraphQl />
             </NavLink>
             <NavLink className="item-link" to={`/schema/${schemaId}/members`}>
-              M
+              <FaUsers />
             </NavLink>
           </div>
         )}
         <div className="menu-item user-profile">
-          <NavLink className="item-link" to="/profile" style={userProfileStyle}>
-            {`${!userAvatarUrl ? 'U' : ''}`}
+          <NavLink className="item-link avatar" to="/profile" style={userProfileStyle}>
+            {!userAvatarUrl ? <div className="no-avatar">{letter}</div> : ''}
           </NavLink>
         </div>
       </div>

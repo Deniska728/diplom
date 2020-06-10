@@ -81,9 +81,7 @@ const MembersList = ({ schemaMembers, user }) => {
             />
           ) : (
             <div className="no-picture">
-              {member.profile
-                ? member.profile.firstName[0] + member.profile.lastName[0]
-                : member.username[0]}
+              {member.profile ? member.profile.firstName[0] : member.username[0]}
             </div>
           )}
           <span className="user-username">{member.username}</span>

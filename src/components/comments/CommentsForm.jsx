@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
+
+import { toast } from 'react-toastify';
 
 import { AiOutlineSend } from 'react-icons/ai';
 
@@ -10,6 +13,7 @@ import CREATE_COMMENT from 'graphql/mutations/comments/createComment';
 const CommentsForm = ({ schemaId, entity }) => {
   const [comment, setComment] = useState('');
   const [createComment, { loading }] = useMutation(CREATE_COMMENT);
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,9 +25,14 @@ const CommentsForm = ({ schemaId, entity }) => {
         content: comment,
       };
 
-      createComment({ variables }).then(() => {
-        setComment('');
-      });
+      createComment({ variables })
+        .then(() => {
+          setComment('');
+        })
+        .catch((err) => {
+          err.graphQLErrors.map(({ message }) => toast.error(message));
+          history.push(`/schema/${schemaId}/comment`);
+        });
     }
   };
 

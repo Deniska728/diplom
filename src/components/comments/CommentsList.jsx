@@ -121,9 +121,7 @@ const CommentsList = ({ entity, schemaId, user }) => {
                   <img src={createdBy.profile.picture} width="36" height="36" alt="" />
                 ) : (
                   <div className="no-picture">
-                    {createdBy.profile
-                      ? createdBy.profile.firstName[0] + createdBy.profile.lastName[0]
-                      : createdBy.username[0]}
+                    {createdBy.profile ? createdBy.profile.firstName[0] : createdBy.username[0]}
                   </div>
                 )}
                 <span className="username">

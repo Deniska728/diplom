@@ -26,7 +26,7 @@ const SchemaPage = ({ user }) => {
       <Route
         path="/schema/:schemaId/"
         component={() => (
-          <div className="schema-page-wrapper">
+          <div>
             <Route
               exact
               path="/schema/:schemaId/"
