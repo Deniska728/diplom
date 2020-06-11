@@ -23,7 +23,7 @@ const MembersPage = ({ user }) => {
 
   return (
     <div className="members-page">
-      <h1>Members page</h1>
+      <h1>Schema members</h1>
       <MembersList schemaMembers={schema} user={user} />
       {schema && user.id === schema.owner.id && <MemberForm schemaId={schemaId} />}
     </div>

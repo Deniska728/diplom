@@ -11,6 +11,10 @@
 
     &.comments {
       padding-right: 320px;
+
+      @include media-breakpoint-down(sm) {
+        padding-right: 0;
+      }
     }
   }
 }

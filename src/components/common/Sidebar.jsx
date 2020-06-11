@@ -9,13 +9,14 @@ const Sidebar = ({ user }) => {
   const schemaId = useSelector((state) => state.schemas.currentSchemaId);
 
   if (!user.id) return <div />;
-  const userAvatarUrl = (user && user.profile && user.profile.picture) || null;
+  const profile = (user && user.profile) || null;
+  const userAvatarUrl = (profile && profile.picture) || null;
 
   const userProfileStyle = {};
   if (userAvatarUrl) userProfileStyle.backgroundImage = `url(${userAvatarUrl})`;
 
   const letter =
-    !userAvatarUrl && user.profile.firstName ? user.profile.firstName[0] : user.profile.username[0];
+    !userAvatarUrl && (profile && profile.firstName ? profile.firstName[0] : user.username[0]);
 
   return (
     <div className="sidebar">
