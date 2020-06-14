@@ -10,6 +10,8 @@ import Loading from 'components/common/Loading';
 
 import RESET from 'graphql/mutations/auth/resetPassword';
 
+import track from 'helpers/track';
+
 const ResetPassword = () => {
   const [resetPassword, { loading }] = useMutation(RESET);
   const [email, setEmail] = useState('');
@@ -21,11 +23,15 @@ const ResetPassword = () => {
       const variables = { email };
 
       resetPassword({ variables })
-        .then(() =>
+        .then(() => {
           toast.success(
             'We have sent you a message to reset your password. Please check your mail.',
-          ),
-        )
+          );
+          track({
+            category: 'Reset password',
+            action: 'User pressed the reset password button',
+          });
+        })
         .catch((err) => err.graphQLErrors.map(({ message }) => toast.error(message)));
     }
   };

@@ -11,6 +11,8 @@ import COMMENTS from 'graphql/queries/comments/comments';
 import DELETE_COMMENT from 'graphql/mutations/comments/deleteComment';
 import COMMENTS_SUBSCRIPTION from 'graphql/subscriptions/comments/comment';
 
+import track from 'helpers/track';
+
 const CommentsList = ({ entity, schemaId, user }) => {
   const { data, loading, subscribeToMore } = useQuery(COMMENTS, {
     variables: {
@@ -77,6 +79,11 @@ const CommentsList = ({ entity, schemaId, user }) => {
     const variables = {
       commentId: id,
     };
+
+    track({
+      category: 'Delete comment',
+      action: 'User pressed the delete password button',
+    });
 
     deleteComment({
       variables,

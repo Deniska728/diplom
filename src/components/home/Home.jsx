@@ -10,6 +10,8 @@ import FeaturesSection from 'components/home/FeaturesSection';
 import SCHEMAS from 'graphql/queries/schemas/schemas';
 import MeContext from 'components/auth/MeContext';
 
+import track from 'helpers/track';
+
 const Home = () => {
   const client = useApolloClient();
   const { me, logout } = useContext(MeContext);
@@ -20,12 +22,20 @@ const Home = () => {
     if (me.id) {
       if (window.confirm('Are you sure? Logout?')) {
         logout();
+        track({
+          category: 'Logout',
+          action: 'User pressed the logout button',
+        });
         client.writeQuery({
           query: SCHEMAS,
           data: { schemas: [] },
         });
       }
     } else {
+      track({
+        category: 'Authorization',
+        action: 'User pressed the sign in link',
+      });
       history.push('/sign-in');
     }
   };

@@ -12,6 +12,8 @@ import Loading from 'components/common/Loading';
 import SIGN_UP from 'graphql/mutations/auth/signUp';
 import MeContext from './MeContext';
 
+import track from 'helpers/track';
+
 const SignIn = () => {
   const history = useHistory();
   const { setUser, refetchMe } = useContext(MeContext);
@@ -45,6 +47,10 @@ const SignIn = () => {
           localStorage.setItem('access_token', data.signUp.token);
           setUser(data.signUp.user);
           refetchMe();
+          track({
+            category: 'Sign Un',
+            action: 'User pressed the sign up button',
+          });
           history.push('/');
         })
         .catch((err) => err.graphQLErrors.map(({ message }) => toast.error(message)));

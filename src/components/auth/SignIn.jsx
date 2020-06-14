@@ -12,6 +12,8 @@ import Loading from 'components/common/Loading';
 import LOGIN from 'graphql/mutations/auth/signIn';
 import MeContext from './MeContext';
 
+import track from 'helpers/track';
+
 const SignIn = () => {
   const history = useHistory();
   const { setUser, refetchMe } = useContext(MeContext);
@@ -43,13 +45,15 @@ const SignIn = () => {
           localStorage.setItem('access_token', data.signIn.token);
           setUser(data.signIn.user);
           refetchMe();
+          track({
+            category: 'Sign In',
+            action: 'User pressed the sign in button',
+          });
           history.push('/');
         })
         .catch((err) => err.graphQLErrors.map(({ message }) => toast.error(message)));
     }
   };
-
-
 
   return (
     <div className="auth-page">

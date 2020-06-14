@@ -11,6 +11,8 @@ import Loading from 'components/common/Loading';
 
 import CHANGE_PASSWORD from 'graphql/mutations/auth/changePassword';
 
+import track from 'helpers/track';
+
 const ChangePassword = () => {
   const { resetPasswordToken } = useParams();
   const history = useHistory();
@@ -42,6 +44,10 @@ const ChangePassword = () => {
 
       changePassword({ variables })
         .then(() => {
+          track({
+            category: 'Change password',
+            action: 'User pressed the change password button',
+          });
           history.push('/sign-in');
         })
         .catch((err) => err.graphQLErrors.map(({ message }) => toast.error(message)));

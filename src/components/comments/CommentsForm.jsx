@@ -10,6 +10,8 @@ import Loading from 'components/common/Loading';
 
 import CREATE_COMMENT from 'graphql/mutations/comments/createComment';
 
+import track from 'helpers/track';
+
 const CommentsForm = ({ schemaId, entity }) => {
   const [comment, setComment] = useState('');
   const [createComment, { loading }] = useMutation(CREATE_COMMENT);
@@ -28,6 +30,10 @@ const CommentsForm = ({ schemaId, entity }) => {
       createComment({ variables })
         .then(() => {
           setComment('');
+          track({
+            category: 'Create comment',
+            action: 'User pressed the create password button',
+          });
         })
         .catch((err) => {
           err.graphQLErrors.map(({ message }) => toast.error(message));

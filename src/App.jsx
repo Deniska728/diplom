@@ -1,7 +1,10 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
+
+import ReactGA from 'react-ga';
 
 import MeContextProvider from 'components/auth/MeContextProvider';
 import Routes from './Routes';
@@ -9,14 +12,21 @@ import Routes from './Routes';
 import client from 'startup/apollo';
 import store from 'startup/redux';
 
+const history = createBrowserHistory();
+
+history.listen((location) => {
+  ReactGA.set({ page: location.pathname });
+  ReactGA.pageview(location.pathname);
+});
+
 const App = () => (
   <Provider store={store}>
     <ApolloProvider client={client}>
-      <BrowserRouter>
+      <Router history={history}>
         <MeContextProvider>
           <Routes />
         </MeContextProvider>
-      </BrowserRouter>
+      </Router>
     </ApolloProvider>
   </Provider>
 );

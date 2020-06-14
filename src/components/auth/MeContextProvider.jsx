@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
+import ReactGA from 'react-ga';
 
 import ME_QUERY from 'graphql/queries/user/me';
 
@@ -13,6 +14,9 @@ const MeContextProvider = ({ children }) => {
   useEffect(() => {
     if (meQuery.data && meQuery.data.me) {
       setUser(meQuery.data.me);
+      ReactGA.set({
+        userId: meQuery.data.me.id,
+      });
     }
   }, [meQuery]);
 
