@@ -11,6 +11,7 @@ import Routes from './Routes';
 
 import client from 'startup/apollo';
 import store from 'startup/redux';
+import 'startup/analytics';
 
 const history = createBrowserHistory();
 
