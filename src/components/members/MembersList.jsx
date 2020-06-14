@@ -8,6 +8,8 @@ import SCHEMAS from 'graphql/queries/schemas/schemas';
 import DELETE_MEMBER from 'graphql/mutations/members/deleteMember';
 import { useHistory } from 'react-router-dom';
 
+import track from 'helpers/track';
+
 const MembersList = ({ schemaMembers, user }) => {
   const { members, owner, id } = schemaMembers || {};
   const [deleteMember, { loading }] = useMutation(DELETE_MEMBER);
@@ -24,6 +26,11 @@ const MembersList = ({ schemaMembers, user }) => {
       };
 
       if (user.id === owner.id) {
+        track({
+          category: 'Delete member',
+          action: 'User pressed the delete member button',
+        });
+
         deleteMember({ variables })
           .then(({ data }) => {
             const membersQuery = client.readQuery({
@@ -48,6 +55,11 @@ const MembersList = ({ schemaMembers, user }) => {
           })
           .catch((err) => console.log(err.message));
       } else if (user.id !== owner.id && user.id === userId) {
+        track({
+          category: 'Delete Remove yourself from members list',
+          action: 'User pressed the delete member button',
+        });
+
         deleteMember({ variables })
           .then(() => {
             const schemas = client.readQuery({ query: SCHEMAS });

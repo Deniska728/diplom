@@ -11,6 +11,8 @@ import Loading from 'components/common/Loading';
 
 import UPDATE_USER from 'graphql/mutations/auth/updateUser';
 
+import track from 'helpers/track';
+
 const inputs = [
   {
     type: 'text',
@@ -74,6 +76,11 @@ const ProfileInfo = ({ me }) => {
 
     Object.keys(values).forEach((key) => {
       if (values[key]) variables[key] = values[key];
+    });
+
+    track({
+      category: 'Update profile info',
+      action: 'User pressed the update profile info button',
     });
 
     updateUser({ variables })

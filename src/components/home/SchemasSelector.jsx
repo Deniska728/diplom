@@ -12,6 +12,8 @@ import CREATE_SCHEMA from 'graphql/mutations/schemas/createSchema';
 import DELETE_SCHEMA from 'graphql/mutations/schemas/deleteSchema';
 import SCHEMAS from 'graphql/queries/schemas/schemas';
 
+import track from 'helpers/track';
+
 const SchemasSelector = ({ user, schemas, loading }) => {
   const client = useApolloClient();
   const history = useHistory();
@@ -62,6 +64,11 @@ const SchemasSelector = ({ user, schemas, loading }) => {
           .then(({ data }) => {
             const schemas = client.readQuery({ query: SCHEMAS });
 
+            track({
+              category: 'Create schema',
+              action: 'User pressed the create schema button',
+            });
+
             client.writeQuery({
               query: SCHEMAS,
               data: {
@@ -83,6 +90,11 @@ const SchemasSelector = ({ user, schemas, loading }) => {
     e.stopPropagation();
 
     if (id && window.confirm('Are you sure? Delete this schema?')) {
+      track({
+        category: 'Delete schema',
+        action: 'User pressed the delete schema button',
+      });
+
       deleteSchema({ variables: { id } })
         .then(({ data }) => {
           const schemas = client.readQuery({ query: SCHEMAS });

@@ -10,6 +10,8 @@ import Loading from 'components/common/Loading';
 
 import CHANGE_PASSWORD from 'graphql/mutations/auth/changePassword';
 
+import track from 'helpers/track';
+
 const inputs = [
   {
     title: 'Old Password',
@@ -51,6 +53,11 @@ const ChangePassword = () => {
             password: newPassword,
             oldPassword,
           };
+
+          track({
+            category: 'Change password',
+            action: 'User pressed the change password button',
+          });
 
           changePassword({ variables })
             .then(() => {

@@ -32,7 +32,7 @@ const CommentsForm = ({ schemaId, entity }) => {
           setComment('');
           track({
             category: 'Create comment',
-            action: 'User pressed the create password button',
+            action: 'User pressed the create comment button',
           });
         })
         .catch((err) => {

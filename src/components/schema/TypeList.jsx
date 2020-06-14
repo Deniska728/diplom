@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import Arguments from 'components/schema/Arguments';
 
+import track from 'helpers/track';
+
 import getFields from './getFields';
 import parseKinds from './parseKinds';
 
@@ -21,6 +23,13 @@ const TypeList = ({ types, kind, schemaId, isHaveFields }) => {
     document.getElementById(type.typeName).scrollIntoView();
   };
 
+  const handleTrack = () => {
+    track({
+      category: 'Go to comment',
+      action: 'User pressed the comment link',
+    });
+  };
+
   return (
     <div>
       {types &&
@@ -33,6 +42,7 @@ const TypeList = ({ types, kind, schemaId, isHaveFields }) => {
               to={`/schema/${schemaId}/comment/${type.name}/${
                 isHaveFields ? 'field' + type.id : type.id
               }`}
+              onClick={handleTrack}
               className="type-link"
             >
               <div id={type.name} className={kind ? 'schema-type-type' : 'schema-type-underlying'}>

@@ -8,6 +8,8 @@ import { Form, Input, Button } from 'reactstrap';
 import MEMBERS from 'graphql/queries/members/members';
 import ADD_MEMBER from 'graphql/mutations/members/addMember';
 
+import track from 'helpers/track';
+
 const MemberForm = ({ schemaId }) => {
   const [value, setValue] = useState('');
   const client = useApolloClient();
@@ -25,6 +27,11 @@ const MemberForm = ({ schemaId }) => {
         schemaId,
         email: value,
       };
+
+      track({
+        category: 'Add member',
+        action: 'User pressed the add member button',
+      });
 
       addSchemaMember({ variables })
         .then(({ data }) => {
