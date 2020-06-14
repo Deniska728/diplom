@@ -16,21 +16,25 @@ const inputs = [
     type: 'text',
     name: 'username',
     label: 'Username',
+    required: true,
   },
   {
     type: 'email',
     name: 'email',
     label: 'Email',
+    required: true,
   },
   {
     type: 'text',
     name: 'firstName',
     label: 'First Name',
+    required: false,
   },
   {
     type: 'text',
     name: 'lastName',
     label: 'Last Name',
+    required: false,
   },
 ];
 
