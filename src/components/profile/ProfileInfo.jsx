@@ -113,7 +113,7 @@ const ProfileInfo = ({ me }) => {
         crop
       />
       <Form onSubmit={handleSubmit}>
-        {inputs.map(({ type, name, label }) => (
+        {inputs.map(({ type, name, label, required }) => (
           <FormGroup key={name}>
             <Label for={type}>{label}</Label>
             <Input
@@ -122,7 +122,7 @@ const ProfileInfo = ({ me }) => {
               name={name}
               value={values[name]}
               onChange={handleChange}
-              required
+              required={required}
             />
           </FormGroup>
         ))}
