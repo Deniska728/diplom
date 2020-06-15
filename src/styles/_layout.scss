@@ -8,5 +8,9 @@
     overflow-y: scroll;
     flex-grow: 1;
     padding-left: 80px;
+
+    @media (max-width: 390px) {
+      padding-left: 65px;
+    }  
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 
 import MEMBERS from 'graphql/queries/members/members';
 import SCHEMAS from 'graphql/queries/schemas/schemas';
@@ -37,8 +37,6 @@ const MembersList = ({ schemaMembers, user }) => {
               query: MEMBERS,
               variables: { id },
             });
-
-            console.log(membersQuery, data);
 
             client.writeQuery({
               query: MEMBERS,
@@ -80,34 +78,55 @@ const MembersList = ({ schemaMembers, user }) => {
   };
 
   return (
-    <ListGroup className="members-list">
-      {members.map((member) => (
-        <ListGroupItem key={member.id} className="members-list-item">
-          {member.profile && member.profile.picture ? (
-            <img
-              src={member.profile.picture}
-              className="user-img"
-              width="50px"
-              height="50px"
-              alt=""
-            />
-          ) : (
-            <div className="no-picture">
-              {member.profile ? member.profile.firstName[0] : member.username[0]}
-            </div>
-          )}
-          <span className="user-username">{member.username}</span>
-          <span className="user-email">{member.email}</span>
-          <Button
-            color="primary"
-            onClick={() => handleDelete(member.id)}
-            disabled={loading || owner.id === member.id}
-          >
-            Delete
-          </Button>
-        </ListGroupItem>
-      ))}
-    </ListGroup>
+    <div className="table-container">
+      <Table className="members-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {members.map((member) => (
+            <tr key={member.id} className="members-table-row">
+              <th>
+                {member.profile && member.profile.picture ? (
+                  <img
+                    src={member.profile.picture}
+                    className="user-img"
+                    width="50px"
+                    height="50px"
+                    alt=""
+                  />
+                ) : (
+                  <div className="no-picture">
+                    {member.profile ? member.profile.firstName[0] : member.username[0]}
+                  </div>
+                )}
+              </th>
+              <td>
+                <span className="user-username">{member.username}</span>
+              </td>
+              <td>
+                <span className="user-email">{member.email}</span>
+              </td>
+              <td>
+                {' '}
+                <Button
+                  color="primary"
+                  onClick={() => handleDelete(member.id)}
+                  disabled={loading || owner.id === member.id}
+                >
+                  Delete
+                </Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
   );
 };
 

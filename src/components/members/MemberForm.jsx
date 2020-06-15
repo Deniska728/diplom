@@ -57,7 +57,11 @@ const MemberForm = ({ schemaId }) => {
 
           setValue('');
         })
-        .catch((err) => toast.error(err.message));
+        .catch(
+          (err) =>
+            (err.graphQLErrors && err.graphQLErrors.map(({ message }) => toast.error(message))) ||
+            toast.error(err.message),
+        );
     } else {
       alert('Enter e-mail');
     }

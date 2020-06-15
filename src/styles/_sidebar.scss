@@ -6,6 +6,10 @@
   display: flex;
   flex-direction: column;
 
+  @media (max-width: 390px) {
+    width: 65px;
+  }
+
   .logo {
     height: 100px;
     flex-grow: 0;
@@ -14,12 +18,16 @@
     .logo-link {
       display: block;
       height: 100px;
-      font-size: 38px;
+      font-size: 34px;
       line-height: 100px;
       font-weight: bold;
       margin-bottom: 20px;
       text-align: center;
       color: $white;
+
+      @media (max-width: 390px) {
+        font-size: 30px;
+      }
     }
   }
 
@@ -32,13 +40,18 @@
       flex-direction: column;
 
       .item-link {
-        font-size: 50px;
+        font-size: 38px;
         display: block;
         text-align: center;
         font-weight: bold;
+        color: $main;
+
+        @media (max-width: 390px) {
+          font-size: 34px;
+        }
 
         &.active {
-          color: rgb(196, 36, 169);
+          color: #21848B;
         }
 
       }
@@ -52,15 +65,20 @@
           background-position: center;
           border: 0px solid;
           border-radius: 200px;
-          width: 50px;
-          height: 50px;
+          width: 45px;
+          height: 45px;
           margin: 0 auto;
+
+          @media (max-width: 390px) {
+            width: 40px;
+            height: 40px;
+          }
 
           &.avatar {
             .no-avatar {
               border-radius: 50%;
-              width: 50px;
-              height: 50px;
+              width: 45px;
+              height: 45px;
               background-color: rgb(252, 184, 184);
               display: flex;
               justify-content: center;
@@ -68,6 +86,11 @@
               font-size: 20px;
               color: #000;
               font-weight: 500;
+
+              @media (max-width: 390px) {
+                width: 40px;
+                height: 40px;
+              }
 
               .span {
                 margin-top: -3px;

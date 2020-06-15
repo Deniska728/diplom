@@ -12,6 +12,20 @@
   border-left: 1px solid $border-color;
   background: rgb(250, 250, 254);
 
+  @include media-breakpoint-down(sm) {
+    min-width: 300px;
+    width: 300px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    width: calc(100% - 80px);
+  }
+
+  @media (max-width: 390px) {
+    width: calc(100% - 65px);
+    min-width: initial;
+  }
+
   .comments-header {
     padding: 10px 15px;
     border-bottom: 1px solid $border-color;

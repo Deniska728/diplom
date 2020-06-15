@@ -12,7 +12,7 @@
     &.comments {
       padding-right: 320px;
 
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(xs) {
         padding-right: 0;
       }
     }
@@ -42,11 +42,16 @@
   cursor: pointer;
   display: -webkit-inline-flex;
   color: rgb(213, 178, 89);
+  word-break: break-all;
 }
 
 .schema-type-enum {
   padding-left: 15px;
   color: rgb(67, 112, 165);
+}
+
+.schema-type-description {
+  word-break: break-word;
 }
 
 .schema-type-link:hover {
