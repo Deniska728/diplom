@@ -1,12 +1,11 @@
 .schema-page-wrapper {
   position: relative;
   display: flex;
-  overflow: scroll;
   height: 100%;
   max-height: 100vh;
 
   .schema {
-    overflow: scroll;
+    overflow: auto;
     max-height: 100vh;
 
     &.comments {

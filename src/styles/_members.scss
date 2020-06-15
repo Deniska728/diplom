@@ -1,7 +1,7 @@
 .members-page {
   height: 100%;
   padding: 25px 50px;
-  overflow: scroll;
+  overflow-y: auto;
 
   @include media-breakpoint-down(sm) {
     padding: 25px 35px;
@@ -23,7 +23,7 @@
 
   .table-container {
     max-width: 100%;
-    overflow-x: scroll;
+    overflow-x: auto;
 
     .members-table {
       margin-top: 20px;

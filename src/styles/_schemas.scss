@@ -46,6 +46,7 @@
 				padding-top: 30px;
 				overflow-y: auto;
 				scrollbar-width: none;
+				background-color: lighten($border, 5%);
 
 				&::-webkit-scrollbar {
 					display: none;
@@ -137,6 +138,7 @@
 				flex-wrap: nowrap;
 				width: 100%;
 				margin: 0;
+				position: relative;
 
 				.form-control {
 					width: 100%;
@@ -147,6 +149,7 @@
 					border-radius: 0;
 					border-color: $main;
 					padding: 0.375rem 0.75rem;
+					padding-right: 105px;
 
 					&.form-control-lg {
 						height: calc(1.5em + 1rem + 8px);
@@ -167,6 +170,8 @@
 					border-radius: 0;
 					background-color: $main;
 					border-color: $main;
+					position: absolute;
+					right: 0;
 
 					&:hover,
 					&:focus {
