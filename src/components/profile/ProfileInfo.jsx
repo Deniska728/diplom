@@ -96,7 +96,9 @@ const ProfileInfo = ({ me }) => {
         {picture ? (
           <img src={picture} alt="avatar" className="avatar" height="70" width="70" />
         ) : (
-          <div className="no-avatar">{letter}</div>
+          <div className="no-avatar">
+            <span>{letter}</span>
+          </div>
         )}
         <div className="cam-icon">
           <FaCamera />

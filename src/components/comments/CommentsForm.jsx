@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useApolloClient } from '@apollo/react-hooks';
 
 import { toast } from 'react-toastify';
 
@@ -8,11 +8,13 @@ import { AiOutlineSend } from 'react-icons/ai';
 
 import Loading from 'components/common/Loading';
 
+import COMMENTS from 'graphql/queries/comments/comments';
 import CREATE_COMMENT from 'graphql/mutations/comments/createComment';
 
 import track from 'helpers/track';
 
 const CommentsForm = ({ schemaId, entity }) => {
+  const client = useApolloClient();
   const [comment, setComment] = useState('');
   const [createComment, { loading }] = useMutation(CREATE_COMMENT);
   const history = useHistory();
@@ -28,7 +30,22 @@ const CommentsForm = ({ schemaId, entity }) => {
       };
 
       createComment({ variables })
-        .then(() => {
+        .then(({ data }) => {
+          const variables = {
+            id: entity.id,
+            schemaId,
+          };
+
+          const comments = client.readQuery({ query: COMMENTS, variables });
+
+          client.writeQuery({
+            query: COMMENTS,
+            variables,
+            data: {
+              comments: [...comments.comments, data.createComment],
+            },
+          });
+
           setComment('');
           track({
             category: 'Create comment',

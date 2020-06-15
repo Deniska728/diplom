@@ -53,6 +53,8 @@ const CommentsList = ({ entity, schemaId, user }) => {
                 comments: prev.comments.filter((t) => t.id !== previousValues.id),
               };
             case 'CREATED':
+              if (user.id === comment.createdBy.id) return;
+
               const currentComment = prev.comments.find((t) => t.id === comment.id);
 
               if (currentComment) return;
@@ -71,7 +73,7 @@ const CommentsList = ({ entity, schemaId, user }) => {
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, [subscribeToMore, entity.id, schemaId]);
+  }, [subscribeToMore, entity.id, schemaId, user.id]);
 
   if (loading) return <Loading />;
 

@@ -38,7 +38,13 @@ const Sidebar = ({ user }) => {
         )}
         <div className="menu-item user-profile">
           <NavLink className="item-link avatar" to="/profile" style={userProfileStyle}>
-            {!userAvatarUrl ? <div className="no-avatar">{letter}</div> : ''}
+            {!userAvatarUrl ? (
+              <div className="no-avatar">
+                <span>{letter}</span>
+              </div>
+            ) : (
+              ''
+            )}
           </NavLink>
         </div>
       </div>
