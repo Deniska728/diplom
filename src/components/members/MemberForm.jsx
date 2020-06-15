@@ -63,7 +63,7 @@ const MemberForm = ({ schemaId }) => {
             toast.error(err.message),
         );
     } else {
-      alert('Enter e-mail');
+      toast.info('Enter e-mail');
     }
   };
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 
+import { toast } from 'react-toastify';
+
 import { Button, Table } from 'reactstrap';
 
 import MEMBERS from 'graphql/queries/members/members';
@@ -18,7 +20,7 @@ const MembersList = ({ schemaMembers, user }) => {
 
   const handleDelete = (userId) => {
     if (user.id === userId && user.id === owner.id) {
-      alert("You can't remove yourself from the list of members.");
+      toast.error("You can't remove yourself from the list of members.");
     } else {
       const variables = {
         schemaId: id,
@@ -53,26 +55,30 @@ const MembersList = ({ schemaMembers, user }) => {
           })
           .catch((err) => console.log(err.message));
       } else if (user.id !== owner.id && user.id === userId) {
-        track({
-          category: 'Delete Remove yourself from members list',
-          action: 'User pressed the delete member button',
-        });
+        if (window.confirm('Are you sure you want to leave this project?')) {
+          track({
+            category: 'Delete Remove yourself from members list',
+            action: 'User pressed the delete member button',
+          });
 
-        deleteMember({ variables })
-          .then(() => {
-            const schemas = client.readQuery({ query: SCHEMAS });
+          deleteMember({ variables })
+            .then(() => {
+              const schemas = client.readQuery({ query: SCHEMAS });
 
-            client.writeQuery({
-              query: SCHEMAS,
-              data: {
-                schemas: schemas.schemas.filter((schema) => schema.id !== id),
-              },
-            });
-          })
-          .catch((err) => console.log(err.message))
-          .finally(() => history.push('/'));
+              if (schemas.schemas.find((schema) => schema.id === id)) {
+                client.writeQuery({
+                  query: SCHEMAS,
+                  data: {
+                    schemas: schemas.schemas.filter((schema) => schema.id !== id),
+                  },
+                });
+              }
+            })
+            .catch((err) => toast.error(err.message))
+            .finally(() => history.push('/'));
+        }
       } else {
-        alert('Access denied.');
+        toast.error('Access denied.');
       }
     }
   };
@@ -117,7 +123,11 @@ const MembersList = ({ schemaMembers, user }) => {
                 <Button
                   color="primary"
                   onClick={() => handleDelete(member.id)}
-                  disabled={loading || owner.id === member.id}
+                  disabled={
+                    loading ||
+                    owner.id === member.id ||
+                    (user.id !== owner.id && user.id !== member.id)
+                  }
                 >
                   Delete
                 </Button>
