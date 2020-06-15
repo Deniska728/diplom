@@ -1,7 +1,7 @@
 .members-page {
   height: 100%;
   padding: 25px 50px;
-  overflow-y: auto;
+  // overflow-y: auto;
 
   @include media-breakpoint-down(sm) {
     padding: 25px 35px;

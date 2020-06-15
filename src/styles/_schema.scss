@@ -11,6 +11,14 @@
     &.comments {
       padding-right: 320px;
 
+      @include media-breakpoint-down(sm) {
+        padding-right: 300px;
+      }
+
+      @media (max-width: 650.98px) {
+        padding-right: 280px;
+      }
+
       @include media-breakpoint-down(xs) {
         padding-right: 0;
       }
@@ -35,6 +43,7 @@
   display: -webkit-inline-flex;
   color: rgb(67, 112, 165);
   margin-right: 3px;
+  word-break: break-all;
 }
 
 .schema-type-link {

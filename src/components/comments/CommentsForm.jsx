@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 
@@ -14,6 +14,7 @@ import CREATE_COMMENT from 'graphql/mutations/comments/createComment';
 import track from 'helpers/track';
 
 const CommentsForm = ({ schemaId, entity }) => {
+  const input = useRef(null);
   const client = useApolloClient();
   const [comment, setComment] = useState('');
   const [createComment, { loading }] = useMutation(CREATE_COMMENT);
@@ -47,6 +48,7 @@ const CommentsForm = ({ schemaId, entity }) => {
           });
 
           setComment('');
+          input.current.focus();
           track({
             category: 'Create comment',
             action: 'User pressed the create comment button',
@@ -74,6 +76,7 @@ const CommentsForm = ({ schemaId, entity }) => {
           value={comment}
           onChange={handleChange}
           disabled={loading}
+          ref={input}
           autoComplete="off"
           required
         />

@@ -17,6 +17,11 @@
     width: 300px;
   }
 
+  @media (max-width: 650.98px) {
+    min-width: 280px;
+    width: 280px;
+  }
+
   @include media-breakpoint-down(xs) {
     width: calc(100% - 80px);
   }
