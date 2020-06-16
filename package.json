@@ -30,6 +30,7 @@
     "react-toastify": "^6.0.5",
     "reactstrap": "^8.4.1",
     "redux": "^4.0.5",
+    "showdown": "^1.9.1",
     "subscriptions-transport-ws": "^0.9.16"
   },
   "scripts": {

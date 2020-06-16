@@ -9,6 +9,7 @@ import Layout from 'components/Layout';
 import Loading from 'components/common/Loading';
 import SignIn from 'components/auth/SignIn';
 import SignUp from 'components/auth/SignUp';
+import LegalPage from 'components/legal/LegalPage';
 import ResetPassword from 'components/auth/ResetPassword';
 import ChangePassword from 'components/auth/ChangePassword';
 import SchemaPage from 'components/schema/SchemaPage';
@@ -29,6 +30,7 @@ const Routes = () => {
         <Route exact path="/" render={() => <Home user={userId} meRefetch={refetchMe} />} />
         <Route path="/sign-in" component={SignIn} />
         <Route path="/sign-up" component={SignUp} />
+        <Route path="/terms" component={LegalPage} />
         <Route
           path="/reset-password"
           render={() => (
