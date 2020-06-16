@@ -78,5 +78,13 @@
         box-shadow: 0 0 0 0.2rem transparentize($color: $secondary-btn, $amount: 0.4);
       }
     }
+
+    .consent-text {
+      font-size: 12px;
+    }
+
+    .terms-link {
+      color: $main;
+    }
   }
 }

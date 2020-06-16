@@ -18,7 +18,7 @@ const SignIn = () => {
   const history = useHistory();
   const { setUser, refetchMe } = useContext(MeContext);
   const [signUp, { loading }] = useMutation(SIGN_UP);
-  const [{ email, password, username }, setValue] = useState({
+  const [{ email, password, username, check }, setValue] = useState({
     email: '',
     password: '',
     username: '',
@@ -99,8 +99,17 @@ const SignIn = () => {
               </div>
             </div>
           </FormGroup>
+          <FormGroup className="consent-text">
+            By clicking the "Submit" button, you accept the{' '}
+            <Link to="/terms" className="terms-link">
+              Consent
+            </Link>{' '}
+            to the processing of personal data.
+          </FormGroup>
           <div className="d-flex justify-content-between">
-            <Button className="submit">Submit {loading ? <Loading invert /> : null}</Button>
+            <Button className="submit" disabled={loading}>
+              Submit {loading ? <Loading invert /> : null}
+            </Button>
             <Link to="/sign-in" className="btn btn-secondary question-btn">
               Sign In
             </Link>

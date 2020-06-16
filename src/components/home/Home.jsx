@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useQuery, useApolloClient } from '@apollo/react-hooks';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import { Container, Row, Col, Button } from 'reactstrap';
 
@@ -49,9 +49,14 @@ const Home = () => {
       <Container>
         <Row className="login-row">
           <Col sm={12}>
-            <Button color="link" className="login-link" onClick={handleClick}>
-              {me.id ? 'Log out' : 'Log in'}
-            </Button>
+            <div className="d-flex justify-content-end align-items-center">
+              <Link to="/profile" className="login-link profile-btn">
+                Profile
+              </Link>
+              <Button color="link" className="login-link" onClick={handleClick}>
+                {me.id ? 'Log out' : 'Log in'}
+              </Button>
+            </div>
           </Col>
         </Row>
         <div className="home-content">
