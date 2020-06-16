@@ -50,9 +50,11 @@ const Home = () => {
         <Row className="login-row">
           <Col sm={12}>
             <div className="d-flex justify-content-end align-items-center">
-              <Link to="/profile" className="login-link profile-btn">
-                Profile
-              </Link>
+              {me.id && (
+                <Link to="/profile" className="login-link profile-btn">
+                  Profile
+                </Link>
+              )}
               <Button color="link" className="login-link" onClick={handleClick}>
                 {me.id ? 'Log out' : 'Log in'}
               </Button>
