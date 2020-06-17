@@ -47,7 +47,10 @@ const ChangePassword = () => {
     if (window.confirm('Are you sure you want to change your password?')) {
       const { newPassword, oldPassword } = values;
 
-      if (newPassword && oldPassword) {
+      if (
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gm.test(newPassword) &&
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gm.test(oldPassword)
+      ) {
         if (newPassword !== oldPassword) {
           const variables = {
             password: newPassword,
@@ -71,6 +74,8 @@ const ChangePassword = () => {
         } else {
           toast.error('You entered the same password');
         }
+      } else {
+        toast.error('Password must contain at least one letter and a number.');
       }
     }
   };

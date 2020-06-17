@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import { useHistory, Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -17,25 +19,39 @@ const ChangePassword = () => {
   const { resetPasswordToken } = useParams();
   const history = useHistory();
   const [changePassword, { loading }] = useMutation(CHANGE_PASSWORD);
-  const [{ newPassword, password }, setValue] = useState({
-    newPassword: '',
-    password: '',
-  });
   const [isOpen, setIsOpen] = useState({
     newPassword: false,
     password: false,
   });
+  const formik = useFormik({
+    initialValues: {
+      newPassword: '',
+      password: '',
+    },
+    validationSchema: yup.object({
+      newPassword: yup
+        .string()
+        .required('No password provided.')
+        .min(8, 'Password is too short - should be 8 chars minimum.')
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gm,
+          'Password must contain at least one letter and a number.',
+        ),
+      password: yup
+        .string()
+        .required('No password provided.')
+        .min(8, 'Password is too short - should be 8 chars minimum.')
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gm,
+          'Password must contain at least one letter and a number.',
+        ),
+    }),
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
+  });
 
-  const handleChange = ({ target: { value, name } }) => {
-    setValue((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = ({ newPassword, password }) => {
     if (resetPasswordToken && newPassword && password && newPassword === password) {
       const variables = {
         token: resetPasswordToken,
@@ -49,6 +65,7 @@ const ChangePassword = () => {
             action: 'User pressed the change password button',
           });
           history.push('/sign-in');
+          toast.success('Password was successfully changed');
         })
         .catch((err) => err.graphQLErrors.map(({ message }) => toast.error(message)));
     }
@@ -65,38 +82,38 @@ const ChangePassword = () => {
     <div className="auth-page">
       <div className="auth-form">
         <h3 className="mb-4">Recover Password</h3>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={formik.handleSubmit}>
           <FormGroup>
             <Label for="newPassword">New Password</Label>
             <div className="input-with-icon">
               <Input
-                type={isOpen.newPassword ? 'text' : 'password'}
-                id="newPassword"
                 name="newPassword"
-                value={newPassword}
-                onChange={handleChange}
-                required
+                {...formik.getFieldProps('newPassword')}
+                type={isOpen.newPassword ? 'text' : 'password'}
               />
               <div className="icon" onClick={() => toggle('newPassword')}>
                 {isOpen.newPassword ? <FaEye /> : <FaEyeSlash />}
               </div>
             </div>
+            {formik.touched.newPassword && formik.errors.newPassword ? (
+              <div className="error">{formik.errors.newPassword}</div>
+            ) : null}
           </FormGroup>
           <FormGroup>
             <Label for="password">Repeat Password</Label>
             <div className="input-with-icon">
               <Input
-                type={isOpen.password ? 'text' : 'password'}
-                id="password"
                 name="password"
-                value={password}
-                onChange={handleChange}
-                required
+                {...formik.getFieldProps('password')}
+                type={isOpen.password ? 'text' : 'password'}
               />
               <div className="icon" onClick={() => toggle('password')}>
                 {isOpen.password ? <FaEye /> : <FaEyeSlash />}
               </div>
             </div>
+            {formik.touched.password && formik.errors.password ? (
+              <div className="error">{formik.errors.password}</div>
+            ) : null}
           </FormGroup>
           <div className="d-flex justify-content-between">
             <Button className="submit">Recover {loading ? <Loading invert /> : null}</Button>

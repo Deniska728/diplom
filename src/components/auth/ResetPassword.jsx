@@ -60,7 +60,9 @@ const ResetPassword = () => {
             </FormText>
           </FormGroup>
           <div className="d-flex justify-content-between">
-            <Button className="submit">Submit {loading ? <Loading invert /> : null}</Button>
+            <Button className="submit" type="submit">
+              Submit {loading ? <Loading invert /> : null}
+            </Button>
             <Link to="/sign-in" className="btn btn-secondary question-btn">
               Remember password?
             </Link>

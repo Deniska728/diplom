@@ -50,7 +50,7 @@ const SchemasSelector = ({ user, schemas, loading }) => {
     const { url, apiKeyName, apiKey } = values;
 
     if (user.id) {
-      if (url) {
+      if (/(https:\/\/.*|http:\/\/.*)/gm.test(url)) {
         const variables = {
           endpoint: url,
         };
@@ -79,7 +79,7 @@ const SchemasSelector = ({ user, schemas, loading }) => {
           })
           .catch((err) => err.graphQLErrors.map(({ message }) => toast.error(message)));
       } else {
-        toast.error('Enter endpoint url');
+        toast.error('Enter a correct endpoint url');
       }
     } else {
       toast.error('To add a schema you need to log in to your account.');
@@ -144,13 +144,12 @@ const SchemasSelector = ({ user, schemas, loading }) => {
         )}
       </div>
       <Form className={`schemas-form${isOpen ? ' form-open' : ''}`} onSubmit={handleSubmit}>
-        <FormGroup>
+        <FormGroup className={isOpen ? 'open' : ''}>
           <Input
             type="url"
             id="url"
             name="url"
             placeholder="https://example.com/graphql"
-            pattern="(https://.*|http://.*)"
             bsSize="lg"
             size="50"
             required

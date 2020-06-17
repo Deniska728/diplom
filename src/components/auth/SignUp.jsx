@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import { useHistory, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -18,23 +20,31 @@ const SignIn = () => {
   const history = useHistory();
   const { setUser, refetchMe } = useContext(MeContext);
   const [signUp, { loading }] = useMutation(SIGN_UP);
-  const [{ email, password, username, check }, setValue] = useState({
-    email: '',
-    password: '',
-    username: '',
-  });
   const [isOpen, setIsOpen] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      username: '',
+    },
+    validationSchema: yup.object({
+      username: yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+      email: yup.string().email('Invalid email address').required('Required'),
+      password: yup
+        .string()
+        .required('No password provided.')
+        .min(8, 'Password is too short - should be 8 chars minimum.')
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gm,
+          'Password must contain at least one letter and a number..',
+        ),
+    }),
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
+  });
 
-  const handleChange = ({ target: { value, name } }) => {
-    setValue((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = ({ email, password, username }) => {
     if (email && password && username) {
       const variables = {
         email,
@@ -60,44 +70,36 @@ const SignIn = () => {
     <div className="auth-page">
       <div className="auth-form">
         <h3 className="mb-4">Sign Up</h3>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={formik.handleSubmit}>
           <FormGroup>
-            <Label for="email">Username</Label>
-            <Input
-              type="username"
-              id="username"
-              name="username"
-              value={username}
-              onChange={handleChange}
-              required
-            />
+            <Label for="username">Username</Label>
+            <Input name="username" {...formik.getFieldProps('username')} />
+            {formik.touched.username && formik.errors.username ? (
+              <div className="error">{formik.errors.username}</div>
+            ) : null}
           </FormGroup>
           <FormGroup>
             <Label for="email">Email</Label>
-            <Input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-              required
-            />
+            <Input name="email" {...formik.getFieldProps('email')} />
+            {formik.touched.email && formik.errors.email ? (
+              <div className="error">{formik.errors.email}</div>
+            ) : null}
           </FormGroup>
           <FormGroup>
             <Label for="password">Password</Label>
             <div className="input-with-icon">
               <Input
-                type={isOpen ? 'text' : 'password'}
-                id="password"
                 name="password"
-                value={password}
-                onChange={handleChange}
-                required
+                {...formik.getFieldProps('password')}
+                type={isOpen ? 'text' : 'password'}
               />
               <div className="icon" onClick={() => setIsOpen(!isOpen)}>
                 {isOpen ? <FaEye /> : <FaEyeSlash />}
               </div>
             </div>
+            {formik.touched.password && formik.errors.password ? (
+              <div className="error">{formik.errors.password}</div>
+            ) : null}
           </FormGroup>
           <FormGroup className="consent-text">
             By clicking the "Submit" button, you accept the{' '}
@@ -107,7 +109,7 @@ const SignIn = () => {
             to the processing of personal data.
           </FormGroup>
           <div className="d-flex justify-content-between">
-            <Button className="submit" disabled={loading}>
+            <Button type="submit" className="submit" disabled={loading}>
               Submit {loading ? <Loading invert /> : null}
             </Button>
             <Link to="/sign-in" className="btn btn-secondary question-btn">

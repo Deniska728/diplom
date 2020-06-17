@@ -149,7 +149,6 @@
 					border-radius: 0;
 					border-color: $main;
 					padding: 0.375rem 0.75rem;
-					padding-right: 105px;
 
 					&.form-control-lg {
 						height: calc(1.5em + 1rem + 8px);
@@ -161,6 +160,10 @@
 
 					&::placeholder {
 						color: darken($border, 10%);
+					}
+
+					&:first-of-type {
+						padding-right: 105px;
 					}
 				}
 
@@ -178,6 +181,12 @@
 						background-color: darken($main, 5%);
 						border-color: darken($main, 5%);
 						box-shadow: none;
+					}
+				}
+
+				&.open {
+					.btn-primary {
+						position: initial;
 					}
 				}
 			}
