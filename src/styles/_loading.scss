@@ -1,0 +1,47 @@
+.loading-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .loader {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: solid 3px $main;
+    border-top: solid 3px transparent;
+    animation: rotation 0.7s linear infinite;
+
+    &.invert {
+      border-color: $white;
+      border-top-color: transparent;
+    }
+  }
+
+  &.page {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: solid 5px $main;
+      border-top: solid 5px transparent;
+      animation: rotation 0.7s linear infinite;
+    }
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
+}

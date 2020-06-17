@@ -1,0 +1,16 @@
+.layout-container {
+  display: flex;
+  height: 100%;
+
+  .content-wrapper {
+    height: 100%;
+    max-height: 100%;
+    flex-grow: 1;
+    padding-left: 80px;
+    overflow: auto;
+
+    @media (max-width: 390px) {
+      padding-left: 65px;
+    }  
+  }
+}

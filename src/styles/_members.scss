@@ -1,0 +1,132 @@
+.members-page {
+  height: 100%;
+  padding: 25px 50px;
+
+  @include media-breakpoint-down(sm) {
+    padding: 25px 35px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    padding: 25px 15px;
+  }
+
+  h1 {
+    @include media-breakpoint-down(sm) {
+      font-size: 32px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 24px;
+    }
+  }
+
+  .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+
+    .members-table {
+      margin-top: 20px;
+  
+      .members-table-row {
+        &:first-of-type {
+          td {
+            border-top: 0;
+          }
+        }
+
+        td {
+          vertical-align: middle;
+
+          &:last-of-type {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 17px 0px;
+          }
+        }
+    
+        .user-img {
+          border-radius: 50%;
+        }
+  
+        .member-item-content {
+          width: 100%;
+          padding: 0 20px;
+          display: flex;
+          justify-content: space-between;
+        }
+  
+        .no-picture {
+          width: 50px;
+          height: 50px;
+          min-width: 50px;
+          min-height: 50px;
+          font-size: 18px;
+          border-radius: 50%;
+          background-color: rgb(252, 184, 184);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  .member-form {
+    display: flex;
+    margin-top: 50px;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 40px;
+    }
+  
+    @include media-breakpoint-down(xs) {
+      margin-top: 30px;
+      flex-direction: column;
+    }
+
+    .email-input {
+      margin-right: 20px;
+    }
+
+    .member-form-btn {
+      white-space: nowrap;
+
+      @include media-breakpoint-down(xs) {
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .btn-primary {
+    background-color: $main;
+    border-color: $main;
+    display: flex;
+
+    .loading-container {
+      margin-left: 5px;
+
+      .loader {
+        width: 15px;
+        height: 15px;
+      }
+    }
+    
+    &:disabled {
+      cursor: initial;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(33, 230, 194, 0.41);
+    }
+
+    &:active {
+      background-color: $main !important;
+      border-color: $main !important;
+    }
+
+    &:active:focus {
+      box-shadow: 0 0 0 0.2rem rgba(33, 230, 194, 0.41);
+    }
+  }
+}

@@ -1,0 +1,138 @@
+.profile-page {
+  height: 100%;
+  padding: 25px 50px;
+  overflow-y: auto;
+
+  @include media-breakpoint-down(sm) {
+    padding: 25px 35px;
+  }
+
+  @include media-breakpoint-down(xs) {
+    padding: 25px 15px;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  h1 {
+    @include media-breakpoint-down(sm) {
+      font-size: 32px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 24px;
+    }
+  }
+
+  h3 {
+    @include media-breakpoint-down(sm) {
+      font-size: 26px;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 20px;
+    }
+  }
+
+  .change-password-form {
+    margin-top: 30px;
+
+    .input-with-icon {
+      position: relative;
+  
+      input {
+        padding-right: 30px;
+      }
+  
+      .icon {
+        position: absolute;
+        top: calc(50% - 13px);
+        right: 10px;
+        user-select: none;
+      }
+    }
+  }
+
+  .submit {
+    background-color: $main;
+    border-color: $main;
+    display: flex;
+
+    .loading-container {
+      margin-left: 5px;
+
+      .loader {
+        width: 15px;
+        height: 15px;
+      }
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(33, 230, 194, 0.41);
+    }
+
+    &:active {
+      background-color: $main !important;
+      border-color: $main !important;
+    }
+
+    &:active:focus {
+      box-shadow: 0 0 0 0.2rem rgba(33, 230, 194, 0.41);
+    }
+  }
+
+  .uploadcare--widget__button,
+  .uploadcare--widget__dragndrop-area,
+  .uploadcare--progress,
+  .uploadcare--widget__text {
+    display: none;
+  }
+
+  .avatar-selector {
+    margin-top: 30px;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+
+    .avatar, .no-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+
+    .no-avatar {
+      background-color: rgb(252, 184, 184);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 35px;
+
+      span {
+        margin-top: -5px;
+      }
+    }
+
+    .cam-icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 27px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: rgb(238, 238, 238);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity .2s ease-in-out;
+    }
+
+    &:hover {
+      .cam-icon {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.features-list {
+	display: flex;
+	justify-content: space-around;
+	align-items: stretch;
+	padding-bottom: 20px;
+
+	@media (max-width: 767.2px) {
+		flex-direction: column;
+	}
+
+	.feature-item {
+		padding: 20px 25px;
+		min-width: 225px;
+		position: relative;
+
+		@include media-breakpoint-down(xs) {
+			padding: 20px 0;
+		}
+
+		.feature-name {
+			font-weight: bold;
+			letter-spacing: 0.5px;
+		}
+
+		.feature-description {
+			max-width: 300px;
+		}
+
+		a {
+			white-space: nowrap;
+		}
+
+		.coming-soon {
+			position: absolute;
+			top: 0px;
+			right: 20px;
+			background-color: #bd1528;
+			padding: .15rem 0.5rem;
+			border-radius: 2rem;
+			color: $white;
+			font-size: 0.75rem;
+		}
+	}
+}

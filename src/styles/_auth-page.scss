@@ -1,0 +1,96 @@
+.auth-page {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .auth-form {
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+    
+    input {
+      font-size: 14px;
+    }
+
+    .error {
+      margin-top: 3px;
+      font-size: 12px;
+      color: $red;
+    }
+
+    .input-with-icon {
+      position: relative;
+
+      input {
+        padding-right: 30px;
+      }
+
+      .icon {
+        position: absolute;
+        top: calc(50% - 13px);
+        right: 10px;
+        user-select: none;
+      }
+    }
+
+    .forgot-password {
+      font-size: 12px;
+      color: $main;
+    }
+
+    .submit {
+      background-color: $main;
+      border-color: $main;
+      display: flex;
+
+      .loading-container {
+        margin-left: 5px;
+
+        .loader {
+          width: 15px;
+          height: 15px;
+        }
+      }
+      
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(33, 230, 194, 0.41);
+      }
+
+      &:active {
+        background-color: $main !important;
+        border-color: $main !important;
+      }
+      
+      &:active:focus {
+        box-shadow: 0 0 0 0.2rem rgba(33, 230, 194, 0.41);
+      }
+    }
+
+    .question-btn {
+      background-color: $secondary-btn;
+      border-color: $secondary-btn;
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem transparentize($color: $secondary-btn, $amount: 0.4);
+      }
+
+      &:active {
+        background-color: $secondary-btn !important;
+        border-color: $secondary-btn !important;
+      }
+
+      &:active:focus {
+        box-shadow: 0 0 0 0.2rem transparentize($color: $secondary-btn, $amount: 0.4);
+      }
+    }
+
+    .consent-text {
+      font-size: 12px;
+    }
+
+    .terms-link {
+      color: $main;
+    }
+  }
+}
